@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>最近点对问题, 离散数学及其应用P448</title>
+</head>
+<body>
+  <canvas id="canvas" width='500' height="500"></canvas>
+  <span id="text"></span>
+  <script>
+    var canvas = document.getElementById('canvas')
+    var context = canvas.getContext('2d')
+    var width = 500, height = 500
+    let originX = 250
+    let originY = 250
+
+    context.moveTo(0, originY)
+    context.lineTo(width, originY)
+
+    context.moveTo(originX, 0)
+    context.lineTo(originX, height)
+    context.stroke()
+
+    context.beginPath()
+    
+    context.arc(originX, originY, 3, 0, 2 * Math.PI, true)
+    context.closePath()
+    context.fill()
+
+    function addPoint(x, y) {
+
+      context.beginPath()
+      context.fillStyle = 'red'
+      context.arc(originX + (x * 25), originY - (y * 25), 3, 0, 2 * Math.PI, true)
+      context.fillText(`(${x}, ${y})`, originX + (x * 25), originY - (y * 25))
+      context.closePath()
+      context.fill()
+    }
+    let index = 0
+    function addLine(x) {
+      x = originX + x * 25
+      context.moveTo(x, 0)
+      context.lineTo(x, height)
+      context.strokeStyle = 'red'
+      context.fillText(`${++index}`, x, 10)
+      context.stroke()
+    }
+  </script>
+  <script src="./index.js"></script>
+  <script>
+
+    let P = []
+    function randomP(count) {
+      while (count--) {
+        let x = parseInt(Math.random() * 10)
+        x = Math.random() > 0.5 ? -x : x 
+        let y = parseInt(Math.random() * 10)
+        y = Math.random() > 0.5 ? -y : y 
+        let i = P.findIndex(elm => {
+          return elm.x === x && elm.y === y
+        })
+        if (i === -1) {
+          P.push(new Point(x, y))
+        }
+      } 
+    }
+    
+    randomP(50)
+    console.log(P)
+    function drawPoint() {
+      context.clearRect(0,0,width,height)
+
+    context.moveTo(0, originY)
+    context.lineTo(width, originY)
+
+    context.moveTo(originX, 0)
+    context.lineTo(originX, height)
+    context.stroke()
+
+    context.beginPath()
+    
+    context.arc(originX, originY, 3, 0, 2 * Math.PI, true)
+    context.closePath()
+    context.fill()
+      for (let i = 0; i < P.length; i ++) {
+        let point = P[i]
+        addPoint(point.x, point.y)
+        
+      }
+    }
+    
+    // context.fill()
+    let Px = P.slice()
+    let Py = P.slice()
+    mergeSort(Px, 0, P.length, compareX)
+    // console.log(Px)
+    mergeSort(Py, 0, P.length, compareY)
+    // console.log(Py)
+    // let date1 = new Date()
+    console.time("test");
+    console.log('最小值为: ' ,closestSort(Px, Py, 0, P.length))
+
+    console.timeEnd("test");
+
+    console.time("test1");
+    // console.log('最小值为: ' ,bruteForce(P, 0, P.length))
+
+    console.timeEnd("test1");
+
+
+    // console.log(date2.getTime() - date1.getTime())
+  </script>
+</body>
+</html>
