@@ -1,0 +1,22 @@
+body {
+  background-color: red;
+  color: white;
+}
+
+#photo {
+  width: 200px;
+  height: 200px;
+  background: url(../images/stay-hungry-stay-foolish.jpg) no-repeat center center / cover;
+  box-sizing: border-box;
+  transform: rotate(45deg);
+  display: flex;
+}
+
+.other {
+  width: 200px;
+  height: 200px;
+  background: url(../images/stay-hungry-stay-foolish.jpg) no-repeat center center / cover;
+  box-sizing: border-box;
+  transform: rotate(45deg);
+  display: flex; 
+}
