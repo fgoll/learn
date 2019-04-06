@@ -1,5 +1,5 @@
-import React from '../../react-mini/packages/react-mini'
-import ReactDOM from 'react-dom'
+import React, {render} from '../../react-mini/packages/react-mini'
+
 
 
 console.log(React)
@@ -13,13 +13,15 @@ console.log(React)
 //   }
 // }
 
-// console.log((
-//   <div>
-//     <span>It is Work!</span>
-//   </div>
-// ))
+console.log((
+  <div style={{width: '100px', height: '100px', background: 'red'}}>
+  <span></span>
+</div>
+))
 
-// ReactDOM.render(
-//     <App />,
-//     document.getElementById('root')
-// );
+React.render(
+    <div style={{width: '100px', height: '100px', background: 'red'}}>
+      <span>It's work</span>
+    </div>,
+    document.getElementById('root')
+);

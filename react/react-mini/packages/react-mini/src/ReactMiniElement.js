@@ -29,7 +29,7 @@ export function createElement(type, config, children) {
     (config.ref !== undefined) && (ref = config.ref);
 
     // 将所有属性添加到新的props里
-    for (propName in config) {
+    for (let propName in config) {
       // hasOwnProperty.call 与 obj.hasOwnProperty的区别见:
       https://stackoverflow.com/questions/12017693/why-use-object-prototype-hasownproperty-callmyobj-prop-instead-of-myobj-hasow
       if (hasOwnProperty.call(config, propName) &&
