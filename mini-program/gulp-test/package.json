@@ -1,0 +1,26 @@
+{
+  "name": "npm-test2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "del": "^4.1.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "moment-mini": "^2.22.1",
+    "run-sequence": "^2.2.1",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.30.0",
+    "webpack-stream": "^5.2.1"
+  }
+}
