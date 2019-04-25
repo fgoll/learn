@@ -1,6 +1,6 @@
 # bg-system-template
 
-## Project setup
+## learn from https://github.com/PanJiaChen/vue-admin-template
 ```
 yarn install
 ```
