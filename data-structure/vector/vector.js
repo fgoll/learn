@@ -106,10 +106,6 @@ Vector.prototype.merge = function(lo, mi, hi) {
   var A = this._elem
   var B = this._elem.slice(lo, mi)
   var lc = hi - mi;
-  // console.log(lo, mi, hi)
-  // console.log(A)
-  // console.log(B)
-  // console.log(A[mi])
   for (var i = 0, j = 0, k = 0; (j < lb) || (k < lc);) {
     if ((j < lb) && (!(k < lc) || B[j] <= A[mi + k])) { A[lo + i] = B[j++]; i ++}
     if ((k < lc) && (!(j < lb) || A[mi + k] < B[j])) { A[lo + i] = A[mi + k]; i ++; k ++}

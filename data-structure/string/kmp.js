@@ -48,4 +48,4 @@ function buildNext2(p) {
 }
 
 
-console.log(kmp('abasacscabaijsi', 'chinchilla'))
+console.log(kmp('app', 'ad'))

@@ -1,13 +1,19 @@
 export function render(element, container) {
   const { type, props } = element;
-
+  
   if (!type) return;
 
   const { children } = props;
 
-  console.log(children)
+  let dom;
 
-  let dom = document.createElement(type);
+  const elementType = typeof type;
+
+  if (elementType === 'function') {
+
+  }else if (elementType === 'string') {
+    dom = document.createElement(type);
+  }
 
   for (let propName in props) {
     if (propName === 'children') continue;
