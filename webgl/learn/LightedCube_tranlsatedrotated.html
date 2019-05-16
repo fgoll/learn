@@ -1,3 +1,5 @@
+<!-- 用法向量乘以模型矩阵的逆转置矩阵, 就可以求得变换后的的法向量 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,18 +26,23 @@
       attribute vec4 a_Color;
       attribute vec4 a_Normal; // 法向量
       uniform mat4 u_MvpMatrix;
+      uniform mat4 u_NormalMatrix; // 用来变换法向量的矩阵
       uniform vec3 u_LightColor; // 光线颜色
       uniform vec3 u_LightDirection; // 归一化的世界坐标  
+      uniform vec3 u_AmbientLight; // 环境光颜色
       varying vec4 v_Color;
       void main() {
         gl_Position = u_MvpMatrix * a_Position;
         // 对法向量归一化
-        vec3 normal = normalize(vec3(a_Normal)); 
+        vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal)); 
         // 计算光线方向和法向量的点积
         float nDotL = max(dot(normalize(u_LightDirection), normal), 0.0);
         // 计算漫反射光的颜色
         vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
-        v_Color = vec4(diffuse, a_Color.a);
+        // 计算环境光产生的反射光的颜色
+        vec3 ambient = u_AmbientLight * a_Color.rgb;
+        // 将漫反射光和反射光相加得到最终颜色
+        v_Color = vec4(diffuse + ambient, a_Color.a);
       }
     `;
 
@@ -173,7 +180,11 @@
       var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
       var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
       var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
+      var u_AmbientLight = gl.getUniformLocation(gl.program, 'u_AmbientLight');
+      var u_NormalMatrix = gl.getUniformLocation(gl.program, 'u_NormalMatrix');
 
+      // 设置环境光颜色
+      gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
       // 设置光线颜色
       gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
       // 设置光线方向(世界坐标系下的)
@@ -183,11 +194,21 @@
 
       // 设置视图矩阵(视点、观察点、上方向)
       var mvpMatrix = new Matrix4();
+      var normalMatrix = new Matrix4();
+      var modelMatrix = new Matrix4();
+
+      modelMatrix.setTranslate(0, 1, 0);
+      modelMatrix.rotate(90, 0, 0, 1);
 
       mvpMatrix.setPerspective(30, 1, 1, 100);
       // mvpMatrix.setTranslate(0.75, 0, 0);
       mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
+      mvpMatrix.multiply(modelMatrix);
 
+      normalMatrix.setInverseOf(modelMatrix);
+      normalMatrix.transpose();
+
+      gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
       gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
 
       // 开启隐藏面消除(隐藏面消除的前提是正确设置可视空间)

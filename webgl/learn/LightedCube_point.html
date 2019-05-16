@@ -24,18 +24,28 @@
       attribute vec4 a_Color;
       attribute vec4 a_Normal; // 法向量
       uniform mat4 u_MvpMatrix;
+      uniform mat4 u_ModelMatrix; // 模型矩阵
+      uniform mat4 u_NormalMatrix; // 用来变换法向量的矩阵
       uniform vec3 u_LightColor; // 光线颜色
-      uniform vec3 u_LightDirection; // 归一化的世界坐标  
+      uniform vec3 u_LightPosition; // 光源位置(世界坐标系)
+      uniform vec3 u_AmbientLight; // 环境光颜色
       varying vec4 v_Color;
       void main() {
         gl_Position = u_MvpMatrix * a_Position;
         // 对法向量归一化
-        vec3 normal = normalize(vec3(a_Normal)); 
+        vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal)); 
+        // 计算顶点的世界坐标
+        vec4 vertexPosition = u_ModelMatrix * a_Position;
+        // 计算光线方向并归一化 
+        vec3 lightDirection = normalize(u_LightPosition - vec3(vertexPosition));
         // 计算光线方向和法向量的点积
-        float nDotL = max(dot(normalize(u_LightDirection), normal), 0.0);
+        float nDotL = max(dot(normalize(lightDirection), normal), 0.0);
         // 计算漫反射光的颜色
         vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
-        v_Color = vec4(diffuse, a_Color.a);
+        // 计算环境光产生的反射光的颜色
+        vec3 ambient = u_AmbientLight * a_Color.rgb;
+        // 将漫反射光和反射光相加得到最终颜色
+        v_Color = vec4(diffuse + ambient, a_Color.a);
       }
     `;
 
@@ -88,26 +98,14 @@
         -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0, // v7-v4-v3-v2 down
         1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0 // v4-v7-v6-v5 back
       ]);
-
-      var colors = new Float32Array([ // Colors
-        0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, // v0-v1-v2-v3 front(blue)
-        0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, // v0-v3-v4-v5 right(green)
-        1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, 1.0, 0.4, 0.4, // v0-v5-v6-v1 up(red)
-        1.0, 1.0, 0.4, 1.0, 1.0, 0.4, 1.0, 1.0, 0.4, 1.0, 1.0, 0.4, // v1-v6-v7-v2 left
-        1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, // v7-v4-v3-v2 down
-        0.4, 1.0, 1.0, 0.4, 1.0, 1.0, 0.4, 1.0, 1.0, 0.4, 1.0, 1.0 // v4-v7-v6-v5 back
+      var colors = new Float32Array([
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v0-v1-v2-v3 front
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v0-v3-v4-v5 right
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v0-v5-v6-v1 up
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v1-v6-v7-v2 left
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, // v7-v4-v3-v2 down
+        1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0 // v4-v7-v6-v5 back
       ]);
-
-
-      var singleColors = new Float32Array([ // Colors
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v0-v1-v2-v3 front(blue)
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v0-v3-v4-v5 right(green)
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v0-v5-v6-v1 up(red)
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v1-v6-v7-v2 left
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v7-v4-v3-v2 down
-        1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, 1, 1, 1.0, // v4-v7-v6-v5 back
-      ]);
-
       var indices = new Uint8Array([ // Indices of the vertices
         0, 1, 2, 0, 2, 3, // front
         4, 5, 6, 4, 6, 7, // right
@@ -133,7 +131,7 @@
         return -1;
 
 
-      if (!initArrayBuffer(gl, singleColors, 3, gl.FLOAT, 'a_Color'))
+      if (!initArrayBuffer(gl, colors, 3, gl.FLOAT, 'a_Color'))
         return -1;
 
       if (!initArrayBuffer(gl, normals, 3, gl.FLOAT, 'a_Normal')) return -1;
@@ -168,30 +166,45 @@
       }
 
       gl.clearColor(0, 0, 0, 1)
+      // 开启隐藏面消除(隐藏面消除的前提是正确设置可视空间)
+      gl.enable(gl.DEPTH_TEST);
 
       // 获取u_MvpMatrix的内存位置
       var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
       var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
-      var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
+      var u_AmbientLight = gl.getUniformLocation(gl.program, 'u_AmbientLight');
+      var u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+      var u_LightPosition = gl.getUniformLocation(gl.program, 'u_LightPosition');
+      var u_NormalMatrix = gl.getUniformLocation(gl.program, 'u_NormalMatrix');
 
+      // 设置环境光颜色
+      gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
       // 设置光线颜色
       gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
-      // 设置光线方向(世界坐标系下的)
-      var lightDirection = new Vector3([2, 5.0, 4.0]);
-      // lightDirection.normalize();
-      gl.uniform3fv(u_LightDirection, lightDirection.elements);
 
+      gl.uniform3f(u_LightPosition, 0.0, 3.0, 4.0);
+
+      var modelMatrix = new Matrix4();
       // 设置视图矩阵(视点、观察点、上方向)
       var mvpMatrix = new Matrix4();
+      var normalMatrix = new Matrix4();
+
+      modelMatrix.setRotate(0, 0, 1, 0);
+      gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
 
       mvpMatrix.setPerspective(30, 1, 1, 100);
       // mvpMatrix.setTranslate(0.75, 0, 0);
       mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
+      mvpMatrix.multiply(modelMatrix);
 
       gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
 
-      // 开启隐藏面消除(隐藏面消除的前提是正确设置可视空间)
-      gl.enable(gl.DEPTH_TEST);
+      normalMatrix.setInverseOf(modelMatrix);
+      normalMatrix.transpose();
+
+      gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
+
+
       // 清空颜色和深度缓冲区
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

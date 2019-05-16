@@ -26,6 +26,7 @@
       uniform mat4 u_MvpMatrix;
       uniform vec3 u_LightColor; // 光线颜色
       uniform vec3 u_LightDirection; // 归一化的世界坐标  
+      uniform vec3 u_AmbientLight; // 环境光颜色
       varying vec4 v_Color;
       void main() {
         gl_Position = u_MvpMatrix * a_Position;
@@ -35,7 +36,10 @@
         float nDotL = max(dot(normalize(u_LightDirection), normal), 0.0);
         // 计算漫反射光的颜色
         vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
-        v_Color = vec4(diffuse, a_Color.a);
+        // 计算环境光产生的反射光的颜色
+        vec3 ambient = u_AmbientLight * a_Color.rgb;
+        // 将漫反射光和反射光相加得到最终颜色
+        v_Color = vec4(diffuse + ambient, a_Color.a);
       }
     `;
 
@@ -173,7 +177,10 @@
       var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
       var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
       var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
+      var u_AmbientLight = gl.getUniformLocation(gl.program, 'u_AmbientLight');
 
+      // 设置环境光颜色
+      gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
       // 设置光线颜色
       gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
       // 设置光线方向(世界坐标系下的)

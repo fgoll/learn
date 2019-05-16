@@ -8,7 +8,7 @@
   <title>Document</title>
 </head>
 
-<body>
+<body onload="main()">
   <canvas id="webgl" width="400" height="400">Please use the browser supporting "canvas"</canvas>
 
   <script type="text/javascript" src="./lib/webgl-utils.js"></script>
@@ -24,15 +24,15 @@
       attribute vec4 a_Color;
       attribute vec4 a_Normal; // 法向量
       uniform mat4 u_MvpMatrix;
+      uniform mat4 u_NormalMatrix;
       uniform vec3 u_LightColor; // 光线颜色
       uniform vec3 u_LightDirection; // 归一化的世界坐标  
       varying vec4 v_Color;
       void main() {
         gl_Position = u_MvpMatrix * a_Position;
-        // 对法向量归一化
-        vec3 normal = normalize(vec3(a_Normal)); 
+        vec4 normal = u_NormalMatrix * a_Normal;
         // 计算光线方向和法向量的点积
-        float nDotL = max(dot(normalize(u_LightDirection), normal), 0.0);
+        float nDotL = max(dot(normalize(u_LightDirection), normalize(normal.xyz)), 0.0);
         // 计算漫反射光的颜色
         vec3 diffuse = u_LightColor * vec3(a_Color) * nDotL;
         v_Color = vec4(diffuse, a_Color.a);
@@ -144,7 +144,7 @@
       return indices.length
     }
 
-    (function main() {
+    function main() {
       var canvas = document.getElementById('webgl');
 
       var nf = document.getElementById('nearFar');
@@ -167,38 +167,73 @@
         return;
       }
 
-      gl.clearColor(0, 0, 0, 1)
+      gl.clearColor(0, 0, 0, 1);
+      gl.enable(gl.DEPTH_TEST);
 
       // 获取u_MvpMatrix的内存位置
       var u_MvpMatrix = gl.getUniformLocation(gl.program, 'u_MvpMatrix');
+      var u_NormalMatrix = gl.getUniformLocation(gl.program, 'u_NormalMatrix');
       var u_LightColor = gl.getUniformLocation(gl.program, 'u_LightColor');
       var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
 
       // 设置光线颜色
-      gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
+      gl.uniform3f(u_LightColor, 0.0, 0.0, 1.0);
       // 设置光线方向(世界坐标系下的)
-      var lightDirection = new Vector3([2, 5.0, 4.0]);
+      var lightDirection = new Vector3([0.5, 5.0, 4.0]);
       // lightDirection.normalize();
       gl.uniform3fv(u_LightDirection, lightDirection.elements);
 
       // 设置视图矩阵(视点、观察点、上方向)
       var mvpMatrix = new Matrix4();
-
-      mvpMatrix.setPerspective(30, 1, 1, 100);
-      // mvpMatrix.setTranslate(0.75, 0, 0);
-      mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
-
-      gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
-
-      // 开启隐藏面消除(隐藏面消除的前提是正确设置可视空间)
-      gl.enable(gl.DEPTH_TEST);
-      // 清空颜色和深度缓冲区
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-      gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
+      var modelMatrix = new Matrix4(); // Model matrix
+      var normalMatrix = new Matrix4();
+      var vpMatrix = new Matrix4(); // View projection matrix
+      // Calculate the view projection matrix
+      vpMatrix.setPerspective(30, canvas.width / canvas.height, 1, 100);
+      vpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
 
 
-    })()
+      var currentAngle = 0.0;
+      var tick = function () {
+        currentAngle = animate(currentAngle); // Update the rotation angle
+
+        // Calculate the model matrix
+        modelMatrix.setRotate(currentAngle, 0, 1, 0); // Rotate around the y-axis
+        mvpMatrix.set(vpMatrix).multiply(modelMatrix);
+        gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
+
+        // Pass the matrix to transform the normal based on the model matrix to u_NormalMatrix
+        normalMatrix.setInverseOf(modelMatrix);
+        normalMatrix.transpose();
+        gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
+
+        // Clear color and depth buffer
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        // Draw the cube
+        gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
+
+        requestAnimationFrame(tick, canvas); // Request that the browser ?calls tick
+      };
+      tick();
+
+
+    }
+
+    // Rotation angle (degrees/second)
+    var ANGLE_STEP = 30.0;
+    // Last time that this function was called
+    var g_last = Date.now();
+
+    function animate(angle) {
+      // Calculate the elapsed time
+      var now = Date.now();
+      var elapsed = now - g_last;
+      g_last = now;
+      // Update the current rotation angle (adjusted by the elapsed time)
+      var newAngle = angle + (ANGLE_STEP * elapsed) / 1000.0;
+      return newAngle %= 360;
+    }
   </script>
 </body>
 
