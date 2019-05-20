@@ -177,7 +177,7 @@
       var u_LightDirection = gl.getUniformLocation(gl.program, 'u_LightDirection');
 
       // 设置光线颜色
-      gl.uniform3f(u_LightColor, 0.0, 0.0, 1.0);
+      gl.uniform3f(u_LightColor, 1.0, 1.0, 1.0);
       // 设置光线方向(世界坐标系下的)
       var lightDirection = new Vector3([0.5, 5.0, 4.0]);
       // lightDirection.normalize();
