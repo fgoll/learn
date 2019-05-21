@@ -1,3 +1,9 @@
+/**
+ * 着色器对象: 着色器对象管理一个顶点着色器或一个片元着色器. 每一个着色器都有一个着色器对象
+ * 程序对象:   程序对象是管理着色器对象的容器. webgl中, 一个程序对象必须包含一个顶点着色器和一个片元着色器
+ * 
+ */ 
+
 // cuon-utils.js (c) 2012 kanda and matsuda
 /**
  * Create a program object and make current
@@ -7,12 +13,13 @@
  * @return true, if the program object was created and successfully made current 
  */
 function initShaders(gl, vshader, fshader) {
+  // 创建一个连接好的程序对象
   var program = createProgram(gl, vshader, fshader);
   if (!program) {
     console.log('Failed to create program');
     return false;
   }
-
+  // 告知webgl系统使用program这个程序对象
   gl.useProgram(program);
   gl.program = program;
 
@@ -27,27 +34,27 @@ function initShaders(gl, vshader, fshader) {
  * @return created program object, or null if the creation has failed
  */
 function createProgram(gl, vshader, fshader) {
-  // Create shader object
+  // 创建着色器对象
   var vertexShader = loadShader(gl, gl.VERTEX_SHADER, vshader);
   var fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fshader);
   if (!vertexShader || !fragmentShader) {
     return null;
   }
 
-  // Create a program object
+  // 创建程序对象
   var program = gl.createProgram();
   if (!program) {
     return null;
   }
 
-  // Attach the shader objects
+  // 为程序对象分配顶点着色器和片元着色器
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
 
-  // Link the program object
+  // 链接程序对象
   gl.linkProgram(program);
 
-  // Check the result of linking
+  // 检查链接结果
   var linked = gl.getProgramParameter(program, gl.LINK_STATUS);
   if (!linked) {
     var error = gl.getProgramInfoLog(program);
@@ -68,20 +75,20 @@ function createProgram(gl, vshader, fshader) {
  * @return created shader object, or null if the creation has failed.
  */
 function loadShader(gl, type, source) {
-  // Create shader object
+  // 创建着色器对象
   var shader = gl.createShader(type);
   if (shader == null) {
     console.log('unable to create shader');
     return null;
   }
 
-  // Set the shader program
+  // 设置着色器的源码
   gl.shaderSource(shader, source);
 
-  // Compile the shader
+  // 编译着色器
   gl.compileShader(shader);
 
-  // Check the result of compilation
+  // 检查着色器的编译状态
   var compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
   if (!compiled) {
     var error = gl.getShaderInfoLog(shader);
