@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Mocha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.js'></script>
+    <script>
+      var fibonacci = function(n) {
+        if (n === 0) {
+          return 0;
+        }
+        var res = [1, 1];
+        for (var i = 2; i < n; i ++) {
+          res[i] = res[i - 1] + res[i - 2];
+        }
+        return res[n-1];
+      }
+    </script>
+    <script src="mocha.js"></script>
+    <script>mocha.setup('bdd');</script>
+    <script src="tests.js"></script>
+    <script>
+      if (window.initMochaPhantomJS) {
+        initMochaPhantomJS()
+        mocha.ui('bdd')
+        expect = chai.expect
+      }
+      mocha.run();
+    </script>
+  </body>
+</html>

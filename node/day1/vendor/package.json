@@ -1,0 +1,14 @@
+{
+  "name": "vendor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mocha.js",
+  "scripts": {
+    "test": "mocha-phantomjs index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha-phantomjs": "^4.1.0"
+  }
+}
