@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h3>This is 2-template</h3>
+
+  <!-- context -->
+  <!-- 引擎会根据内容所处的上下文改变其显示的内容 -->
+  <div>{{ . }}</div>
+  <div><a href="/{{ . }}">Path</a></div>
+  <div><a href="/?={{ . }}">Query</a></div>
+  <div><a onclick="f('{{ . }}')">Onclick</a></div>
+
+  <!-- func -->
+  <div>the date/time is {{ . | fdate }}</div>
+    
+  <!-- range -->
+  <ul>
+      <!-- 
+        {{ range . }}
+          <li>{{ . }}</li>
+        {{ end }}
+       -->
+      {{ range $key, $value := . }}
+        <li>{{ $key }} {{ $value }}</li>
+     
+      {{ end }}
+  </ul>
+  
+  <div>
+      {{ if . }}
+      Number is greater than 5
+      {{ else }}
+      Number is 5 or less
+      {{ end }}
+  </div>
+
+  <!-- with -->
+  <div>
+    <div>the dot is {{ . }}</div>
+    <div>
+      <!-- 对 . 进行设置 -->
+      {{ with "world" }}
+      Now the dot is set to {{ . }}
+      {{ end }}
+    </div>
+    <div>the dot is {{ . }} again</div>
+  </div>
+
+  <!-- include -->
+  {{ template "1-template.html" . }}
+
+
+  
+</body>
+</html>
