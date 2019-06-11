@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
 import { getToken, removeToken, setToken } from '@/utils/auth';
-import { login, logout } from '@/api/user';
+import { login } from '@/api/user';
 import { resetRouter } from '@/router';
 
 const state = {
@@ -30,21 +30,18 @@ const actions = {
     });
   },
 
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '');
-        removeToken();
-        resetRouter();
-        resolve();
-      }).catch((error) => {
-        reject(error);
-      });
+  logout({ commit }) {
+    return new Promise((resolve) => {
+      commit('SET_TOKEN', '');
+      removeToken();
+      resetRouter();
+      resolve();
     });
   },
 };
 
 export default {
+  namespaced: true,
   state,
   mutations,
   actions,

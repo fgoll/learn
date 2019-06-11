@@ -1,6 +1,6 @@
 <template>
   <div v-if="currentApp">
-    Branch  --- 来自{{currentApp}}
+    Branch  --- 来自{{ currentApp }}
   </div>
 </template>
 

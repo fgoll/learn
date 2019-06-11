@@ -5,16 +5,14 @@ function resolve(dir) {
 }
 
 module.exports = {
+  publicPath: '/',
   devServer: {
-    proxy: {
-      [process.env.VUE_APP_BASE_API]: {
-        target: 'https://easy-mock.com/mock/5cc005b62cdc4c6579e3deb6/example',
-        changeOrigin: true,
-        pathRewrite: {
-          [`^${process.env.VUE_APP_BASE_API}`]: '',
-        },
-      },
+    open: true,
+    overlay: {
+      warnings: false,
+      errors: true,
     },
+    disableHostCheck: true,
   },
   css: {
     loaderOptions: {
@@ -33,6 +31,21 @@ module.exports = {
     },
   },
   chainWebpack: (config) => {
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end();
 
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]',
+      })
+      .end();
   },
 };

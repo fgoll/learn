@@ -27,6 +27,7 @@ export function recover() {
 }
 
 export default {
+  namespaced: true,
   state,
   mutations,
 };

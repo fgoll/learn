@@ -1,6 +1,6 @@
 <template>
   <div v-if="currentApp">
-    Dashboard  --- 来自{{currentApp}}
+    Dashboard  --- 来自{{ currentApp }}
   </div>
 </template>
 

@@ -1,18 +1,32 @@
 <template>
   <div class="application-list">
-    <a-table :columns="columns" :dataSource="data">
-      <a href="javascript:;"
-         @click="go2Detail({name: 'dashboard', key: item.key})"
-         slot='name'
-         slot-scope="name, item"
-         style="color: #409EFF">{{name}}</a>
-      <div slot="participant" slot-scope="participant">
-        <a-avatar v-for="item in participant"
-                  :key="item.key"
-                  style="margin-right: -10px"
-                  size="small"
-                  icon="user"/></div>
-      <a slot="action" href="javascript:;">邀请人员</a>
+    <a-table
+      :columns="columns"
+      :data-source="data"
+    >
+      <a
+        slot="name"
+        slot-scope="name, item"
+        href="javascript:;"
+        style="color: #409EFF"
+        @click="go2Detail({name: 'dashboard', key: item.key})"
+      >{{ name }}</a>
+      <div
+        slot="participant"
+        slot-scope="participant"
+      >
+        <a-avatar
+          v-for="item in participant"
+          :key="item.key"
+          style="margin-right: -10px"
+          size="small"
+          icon="user"
+        />
+      </div>
+      <a
+        slot="action"
+        href="javascript:;"
+      >邀请人员</a>
     </a-table>
   </div>
 </template>
@@ -65,7 +79,7 @@ export default {
 
   methods: {
     go2Detail(p) {
-      this.$store.commit('SET_CURRENT', p.key);
+      this.$store.commit('app/SET_CURRENT', p.key);
       this.$router.push(p);
     },
   },

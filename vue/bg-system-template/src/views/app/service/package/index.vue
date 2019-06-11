@@ -1,5 +1,3 @@
 <template>
-  <div>
-    Package
-  </div>
+  <router-view />
 </template>

@@ -5,7 +5,9 @@ import 'ant-design-vue/dist/antd.css';
 // import {
 //   Button, Form, Tabs,
 // } from 'ant-design-vue';
-import { MenuItem, Submenu, Menu } from 'element-ui';
+import {
+  MenuItem, Submenu, Menu, Tooltip,
+} from 'element-ui';
 
 import App from './App.vue';
 import store from './store';
@@ -13,11 +15,13 @@ import router from './router';
 
 import './styles/index.scss';
 
+import '@/icons'; // icon
 import '@/permission';
 
 Vue.use(Menu);
 Vue.use(MenuItem);
 Vue.use(Submenu);
+Vue.use(Tooltip);
 
 // permission control
 

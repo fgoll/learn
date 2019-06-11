@@ -1,10 +1,26 @@
 <template>
   <div class="login-container">
-    <a-form class="login-form" :form="form">
-      <div class="logo-container">后台系统</div>
-      <a-tabs defaultActiveKey="2" :tabBarStyle="tabStyle">
-        <a-tab-pane tab="钉钉登录" key="1">钉钉登录</a-tab-pane>
-        <a-tab-pane tab="账号登录" key="2">
+    <a-form
+      class="login-form"
+      :form="form"
+    >
+      <div class="logo-container">
+        后台系统
+      </div>
+      <a-tabs
+        default-active-key="2"
+        :tab-bar-style="tabStyle"
+      >
+        <a-tab-pane
+          key="1"
+          tab="钉钉登录"
+        >
+          钉钉登录
+        </a-tab-pane>
+        <a-tab-pane
+          key="2"
+          tab="账号登录"
+        >
           <a-form-item>
             <a-input
               v-decorator="[
@@ -13,33 +29,41 @@
               ]"
               placeholder="邮箱地址"
             >
-              <a-icon slot="prefix"
-                      type="user"
-                      style="color:rgba(0,0,0,.25)"/>
+              <a-icon
+                slot="prefix"
+                type="user"
+                style="color:rgba(0,0,0,.25)"
+              />
             </a-input>
           </a-form-item>
           <a-form-item>
             <a-input
+              ref="password"
               v-decorator="[
                 'password',
                 {rules: [{ required: true, message: '请输入密码' }]}
               ]"
-              autocomplete='off'
+              autocomplete="off"
               :type="passwordType"
               placeholder="密码"
-              ref="password"
             >
-              <a-icon slot="prefix"
-                      type="lock"
-                      style="color:rgba(0,0,0,.25)"/>
-              <a-icon slot="suffix"
-                      type="eye"
-                      v-if="passwordType === 'password'"
-                      @click="switchPwd"/>
-              <a-icon slot="suffix"
-                      type="eye-invisible"
-                      v-else
-                      @click="switchPwd"/>
+              <a-icon
+                slot="prefix"
+                type="lock"
+                style="color:rgba(0,0,0,.25)"
+              />
+              <a-icon
+                v-if="passwordType === 'password'"
+                slot="suffix"
+                type="eye"
+                @click="switchPwd"
+              />
+              <a-icon
+                v-else
+                slot="suffix"
+                type="eye-invisible"
+                @click="switchPwd"
+              />
             </a-input>
           </a-form-item>
 
@@ -51,15 +75,23 @@
                   valuePropName: 'checked',
                   initialValue: true,
                 }
-              ]">
+              ]"
+            >
               自动登录
             </a-checkbox>
             <a
               class="login-form-forgot"
-              href="">
+              href=""
+            >
               忘记密码
             </a>
-            <a-button type="primary" block @click="handleLogin">登录</a-button>
+            <a-button
+              type="primary"
+              block
+              @click="handleLogin"
+            >
+              登录
+            </a-button>
           </a-form-item>
         </a-tab-pane>
       </a-tabs>
@@ -80,6 +112,9 @@ export default {
       passwordType: 'password',
     };
   },
+
+  mounted() {
+  },
   methods: {
     switchPwd() {
       if (this.passwordType === 'password') {
@@ -96,7 +131,7 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.$store.dispatch('login', values).then(() => {
+          this.$store.dispatch('user/login', values).then(() => {
             this.$router.push({ path: '/' }); // 登录成功之后重定向到首页
           }).catch((error) => {
             this.$message.error(error); // 登录失败提示错误
@@ -104,9 +139,6 @@ export default {
         }
       });
     },
-  },
-
-  mounted() {
   },
 };
 </script>

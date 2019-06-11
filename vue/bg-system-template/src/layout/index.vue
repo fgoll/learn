@@ -1,9 +1,12 @@
 <template>
-  <div class="app-wrapper">
-    <sidebar/>
+  <div
+    class="app-wrapper"
+    :class="classObj"
+  >
+    <sidebar />
     <div class="main-container">
-      <navbar/>
-      <app-main/>
+      <navbar />
+      <app-main />
     </div>
   </div>
 </template>
@@ -21,7 +24,17 @@ export default {
   data() {
     return {};
   },
-  methods: {
+  computed: {
+    sidebar() {
+      return this.$store.state.settings.sidebar;
+    },
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+      };
+    },
   },
 };
 </script>
