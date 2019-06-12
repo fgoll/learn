@@ -148,6 +148,14 @@ div:focus {
 
 }
 
+.app-detail-page {
+  display: flex; justify-content: center;
+
+  .form {
+    width: 400px; padding-top: 80px;
+  }
+}
+
 .app-image-list {
   li {
     float: left;

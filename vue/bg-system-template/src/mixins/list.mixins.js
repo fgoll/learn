@@ -91,12 +91,10 @@ export default {
 
       try {
         const res = await this.loadData();
-        console.log(res);
         this.pagination.total = res.total || 0;
 
         this.list = res.data;
       } catch (e) {
-        console.log(e);
         this.$message.error('加载出错');
       } finally {
         this.loading = false;
