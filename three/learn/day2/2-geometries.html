@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="webgl">
+
+  </div>
+
+  <div id="stats"></div>
+
+  <script src="../libs/three.js"></script>
+  <script type="text/javascript" src="../libs/ConvexGeometry.js"></script>
+  <script src="../libs/stats.js"></script>
+  <script src="../libs/dat.gui.js"></script>
+
+  <script>
+    function initStats() {
+      var stats = new Stats();
+      stats.setMode(0);
+      stats.domElement.style.position = 'absolute';
+      stats.domElement.style.left = '0px';
+      stats.domElement.style.top = '0px';
+      document.getElementById("stats").appendChild(stats.domElement);
+      return stats;
+    }
+
+    function init() {
+      var stats = initStats();
+
+      var scene = new THREE.Scene();
+
+      // // 添加雾化效果
+      // scene.fog = new THREE.Fog(0xffffff, 0.015, 100);
+
+      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+      var renderer = new THREE.WebGLRenderer();
+
+      // renderer.setClearColorHex(new THREE.Color(0xEEEEEE, 1.0));
+      renderer.setClearColorHex(0xEEEEEE);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMapEnabled = true;
+
+      // var axes = new THREE.AxisHelper(20);
+      // scene.add(axes);
+
+      var spotLight = new THREE.SpotLight(0xffffff);
+      spotLight.position.set(-40, 60, -10);
+      spotLight.castShadow = true;
+      scene.add(spotLight);
+
+      // var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+      // scene.add(ambientLight);
+
+      var planeGeometry = new THREE.PlaneGeometry(60, 40, 1, 1);
+      var planeMaterial = new THREE.MeshLambertMaterial({
+        color: 0xcccccc
+      });
+
+      var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+
+      plane.rotation.x = -0.5 * Math.PI;
+      plane.position.x = 10;
+      plane.position.y = 0;
+      plane.position.z = 0;
+
+      plane.receiveShadow = true;
+
+      scene.add(plane);
+
+
+      camera.position.x = -30;
+      camera.position.y = 40;
+      camera.position.z = 30;
+      camera.lookAt(scene.position);
+
+      addGeometries(scene);
+
+      function addGeometries(scene) {
+        var geoms = [];
+
+        var points = [
+          new THREE.Vector3(2, 2, 2),
+          new THREE.Vector3(2, 2, -2),
+          new THREE.Vector3(-2, 2, -2),
+          new THREE.Vector3(-2, 2, 2),
+          new THREE.Vector3(2, -2, 2),
+          new THREE.Vector3(2, -2, -2),
+          new THREE.Vector3(-2, -2, -2),
+          new THREE.Vector3(-2, -2, 2)
+        ];
+
+        geoms.push(new THREE.ConvexGeometry(points));
+
+        var pts = [];
+        var detail = .1;
+        var radius = 3;
+        for (var angle = 0.0; angle < Math.PI; angle += detail) {
+          pts.push(new THREE.Vector3(Math.cos(angle) * radius, 0, Math.sin(angle) * radius));
+        }
+        geoms.push(new THREE.LatheGeometry(pts, 12));
+
+        var j = 0;
+        for (var i = 0; i < geoms.length; i++) {
+          var cubeMaterial = new THREE.MeshLambertMaterial({
+            wireframe: true,
+            color: Math.random() * 0xffffff
+          });
+
+          var materials = [
+
+            new THREE.MeshLambertMaterial({
+              color: Math.random() * 0xffffff,
+              shading: THREE.FlatShading
+            }),
+            new THREE.MeshBasicMaterial({
+              color: 0x000000,
+              wireframe: true
+            })
+
+          ];
+
+          var mesh = THREE.SceneUtils.createMultiMaterialObject(geoms[i], materials);
+          mesh.traverse(function (e) {
+            e.castShadow = true
+          });
+
+          //var mesh = new THREE.Mesh(geoms[i],materials[i]);
+          //mesh.castShadow=true;
+          mesh.position.x = -24 + ((i % 4) * 12);
+          mesh.position.y = 4;
+          mesh.position.z = -8 + (j * 12);
+
+          if ((i + 1) % 4 == 0) j++;
+          scene.add(mesh);
+        }
+
+      }
+
+      function renderScene() {
+        stats.update();
+
+        requestAnimationFrame(renderScene);
+        renderer.render(scene, camera);
+      }
+
+      function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      window.addEventListener('resize', onResize, false);
+
+      document.getElementById("webgl").appendChild(renderer.domElement);
+      // renderer.render(scene, camera);
+      renderScene();
+
+    }
+
+    window.onload = init
+  </script>
+</body>
+
+</html>
