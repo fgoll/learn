@@ -2,7 +2,7 @@
 
 
 - /data-structure 数据结构的学习
- - [数据结构-邓俊华](https://courses.edx.org/courses/course-v1:TsinghuaX+30240184.1x+3T2017/course/)
+  - [数据结构-邓俊华](https://courses.edx.org/courses/course-v1:TsinghuaX+30240184.1x+3T2017/course/)
 
 - /webpack webpack的学习
 
