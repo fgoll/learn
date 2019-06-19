@@ -5,6 +5,8 @@
   - [数据结构-邓俊华](https://courses.edx.org/courses/course-v1:TsinghuaX+30240184.1x+3T2017/course/)
 
 - /webpack webpack的学习
+  - [技术胖](https://jspang.com/posts/2017/09/16/webpack3.html)
+  - [diving-into-webpack](https://github.com/lihongxun945/diving-into-webpack)
 
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
