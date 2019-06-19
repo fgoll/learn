@@ -8,6 +8,8 @@
 
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
+  - [三维矩阵变换笔记](https://github.com/fgoll/learn/tree/master/opengl/day6)
+
 - /react 学习react源码并实现react小型框架
   - [react官方教程](https://react.docschina.org/tutorial/tutorial.html)
   - [React.js 小书](http://huziketang.mangojuice.top/books/react/lesson35)
