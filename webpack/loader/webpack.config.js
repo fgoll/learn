@@ -13,13 +13,19 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader?modules'
       }
     ]
   },
 
   resolveLoader: {
     alias: {
-      "babel-loader": path.resolve('./my-loaders/babel-loader.js')
+      "babel-loader": path.resolve('./my-loaders/babel-loader.js'),
+      'style-loader': path.resolve('./my-loaders/style-loader'),
+      'css-loader': path.resolve('./my-loaders/css-loader')
     }
   },
 

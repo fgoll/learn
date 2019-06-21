@@ -1,0 +1,6 @@
+@import './global.css';
+
+div {
+  background: red;
+  color: aqua;
+}
