@@ -17,6 +17,13 @@ module.exports = {
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader?modules'
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+          loader: 'file-loader',
+          // loader: 'url-loader',
+        }]
       }
     ]
   },
@@ -25,7 +32,10 @@ module.exports = {
     alias: {
       "babel-loader": path.resolve('./my-loaders/babel-loader.js'),
       'style-loader': path.resolve('./my-loaders/style-loader'),
-      'css-loader': path.resolve('./my-loaders/css-loader')
+      'css-loader': path.resolve('./my-loaders/css-loader'),
+      'file-loader': path.resolve('./my-loaders/file-loader'),
+      'url-loader': path.resolve('./my-loaders/url-loader'),
+      
     }
   },
 

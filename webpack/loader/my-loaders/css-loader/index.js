@@ -113,7 +113,7 @@ module.exports = function(inputSource) {
       if (!match) return item;
 
       const url = options.urlItems[+match[1]].url;
-      return '" + require(' + url + '") + "';
+      return '" + require("' + url + '") + "';
     })
 
     var moduleJs = "exports.push([module.id, " + cssAsString + ",\"\"])";

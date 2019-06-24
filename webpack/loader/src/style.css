@@ -3,4 +3,7 @@
 div {
   background: red;
   color: aqua;
+  background: url('./Group.png') no-repeat center center / cover;
+  width: 100px;
+  height: 100px;
 }
