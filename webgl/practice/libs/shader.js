@@ -28,5 +28,7 @@ export function initShaders(gl, vshader, fshader) {
     return null;
   }
 
+  gl.useProgram(program);
+
   return program;
 }
