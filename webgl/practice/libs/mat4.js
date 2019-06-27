@@ -55,6 +55,94 @@ export function perspective (out, fovy, aspect, near, far) {
   return out
 }
 
+export function identity (e) {
+  e[0] = 1;
+  e[1] = 0;
+  e[2] = 0;
+  e[3] = 0;
+  e[4] = 0;
+  e[5] = 1;
+  e[6] = 0;
+  e[7] = 0;
+  e[8] = 0;
+  e[9] = 0;
+  e[10] = 1;
+  e[11] = 0;
+  e[12] = 0;
+  e[13] = 0;
+  e[14] = 0;
+  e[15] = 1;
+  return e
+};
+
+export function lookAt (e, t, n, r) {
+  let s, o, a, c, i, f, u, l, p, E;
+  let h = t[0];
+  let m = t[1];
+  let d = t[2];
+  let T = r[0];
+  let g = r[1];
+  let _ = r[2];
+  let R = n[0];
+  let P = n[1];
+  let x = n[2];
+  if (Math.abs(h - R) < EPSILON && Math.abs(m - P) < EPSILON && Math.abs(d - x) < EPSILON) {
+    return identity(e)
+  }
+  u = h - R;
+  l = m - P;
+  p = d - x;
+  E = 1 / Math.hypot(u, l, p);
+  u *= E;
+  l *= E;
+  p *= E;
+  s = g * p - _ * l;
+  o = _ * u - T * p;
+  a = T * l - g * u;
+  E = Math.hypot(s, o, a);
+  if (!E) {
+    s = 0;
+    o = 0;
+    a = 0
+  } else {
+    E = 1 / E;
+    s *= E;
+    o *= E;
+    a *= E
+  }
+  c = l * a - p * o;
+  i = p * s - u * a;
+  f = u * o - l * s;
+  E = Math.hypot(c, i, f);
+  if (!E) {
+    c = 0;
+    i = 0;
+    f = 0
+  } else {
+    E = 1 / E;
+    c *= E;
+    i *= E;
+    f *= E
+  }
+  e[0] = s;
+  e[1] = c;
+  e[2] = u;
+  e[3] = 0;
+  e[4] = o;
+  e[5] = i;
+  e[6] = l;
+  e[7] = 0;
+  e[8] = a;
+  e[9] = f;
+  e[10] = p;
+  e[11] = 0;
+  e[12] = -(s * h + o * m + a * d);
+  e[13] = -(c * h + i * m + f * d);
+  e[14] = -(u * h + l * m + p * d);
+  e[15] = 1;
+  return e
+};
+
 export function translate (out, a, [x, y, z]) {
   let a00, a01, a02, a03
   let a10, a11, a12, a13
