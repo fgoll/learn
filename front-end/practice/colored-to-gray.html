@@ -1,0 +1,76 @@
+<!-- 使用css或canvas将彩色图片变成黑白色 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    img {
+      width: 200px;
+      height: 200px;
+      filter: grayscale(100%);
+      filter: gray;
+    }
+
+    img:not(#img) {
+      filter: grayscale(100%);
+      filter: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+      <img id="img" src="./img/Group.png" alt="">
+  </div>
+
+  <div>
+    <canvas id="canvas" width="200" height="200"></canvas>
+  </div>
+
+  <script>
+    var canvas, ctx
+
+    function convert() {
+      var img = document.getElementById('img')
+      canvas = document.getElementById('canvas')
+
+      ctx = canvas.getContext('2d')
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, 200, 200)
+        getColorData()
+        putColorData()
+      }
+
+      img.src = './img/Group.png'
+    }
+
+    function getColorData() {
+      var length = canvas.width * canvas.height;
+      myImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      for (var i = 0; i < length * 4; i += 4) {
+        var myRed = myImage.data[i];
+        var myGreen = myImage.data[i + 1];
+        var myBlue = myImage.data[i + 2];
+        myGray = parseInt((myRed + myGreen + myBlue) / 3);
+        myImage.data[i] = myGray;
+        myImage.data[i + 1] = myGray;
+        myImage.data[i + 2] = myGray;
+      }
+    }
+
+    function putColorData() {
+      ctx.putImageData(myImage, 0, 0);
+
+    }
+
+    convert()
+  </script>
+
+</body>
+
+</html>
