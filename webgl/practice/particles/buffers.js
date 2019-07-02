@@ -1,65 +1,53 @@
 
-const push$1 = (e, t) => {
-  e[e.length] = t
-};
-function getProps() {
-  const n = 100;
-  const [pos, center, texCoord, index] = [
-    [],
-    [],
-    [],
-    []
-  ];
-  for (let e = 0; e < n; e++) {
-    for (let t = 0; t < n; t++) {
-      const [c, i] = [e / n, (e + 1) / n];
-      const [f, u] = [t / n, (t + 1) / n];
-      const [l, p] = [c + i / 2, f + u / 2];
-      const E = .5;
-      push$1(pos, c - E);
-      push$1(pos, f - E);
-      push$1(pos, i - E);
-      push$1(pos, f - E);
-      push$1(pos, i - E);
-      push$1(pos, u - E);
-      push$1(pos, c - E);
-      push$1(pos, u - E);
-      push$1(texCoord, c);
-      push$1(texCoord, f);
-      push$1(texCoord, i);
-      push$1(texCoord, f);
-      push$1(texCoord, i);
-      push$1(texCoord, u);
-      push$1(texCoord, c);
-      push$1(texCoord, u);
-      push$1(center, l - E);
-      push$1(center, p - E);
-      push$1(center, l - E);
-      push$1(center, p - E);
-      push$1(center, l - E);
-      push$1(center, p - E);
-      push$1(center, l - E);
-      push$1(center, p - E);
-      const h = (e * n + t) * 4;
-      push$1(index, h);
-      push$1(index, h + 1);
-      push$1(index, h + 2);
-      push$1(index, h);
-      push$1(index, h + 2);
-      push$1(index, h + 3)
+const push = (arr, x) => { arr[arr.length] = x }
+
+// 生成将图像等分为 n x n 矩形的数据
+const getProps = n => {
+  const [positions, centers, texCoords, indices] = [[], [], [], []]
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const [x0, x1] = [i / n, (i + 1) / n] // 每个粒子的 x 轴左右坐标
+      const [y0, y1] = [j / n, (j + 1) / n] // 每个粒子的 y 轴上下坐标
+      const [xC, yC] = [x0 + x1 / 2, y0 + y1 / 2] // 每个粒子的中心二维坐标
+      const h = 0.5 // 将中心点从 (0.5, 0.5) 平移到原点的偏移量
+
+      // positions in (x, y), z = 0
+      push(positions, x0 - h); push(positions, y0 - h)
+      push(positions, x1 - h); push(positions, y0 - h)
+      push(positions, x1 - h); push(positions, y1 - h)
+      push(positions, x0 - h); push(positions, y1 - h)
+
+      // texCoords in (x, y)
+      push(texCoords, x0); push(texCoords, y0)
+      push(texCoords, x1); push(texCoords, y0)
+      push(texCoords, x1); push(texCoords, y1)
+      push(texCoords, x0); push(texCoords, y1)
+
+      // center in (x, y), z = 0
+      push(centers, xC - h); push(centers, yC - h)
+      push(centers, xC - h); push(centers, yC - h)
+      push(centers, xC - h); push(centers, yC - h)
+      push(centers, xC - h); push(centers, yC - h)
+
+      // indices
+      const k = (i * n + j) * 4
+      push(indices, k); push(indices, k + 1); push(indices, k + 2)
+      push(indices, k); push(indices, k + 2); push(indices, k + 3)
     }
   }
 
+  // 着色器内的变量名是单数形式，将复数形式的数组名与其对应起来
   return {
-    pos,
-    center,
-    texCoord,
-    index,
+    pos: positions,
+    center: centers,
+    texCoord: texCoords,
+    index: indices
   }
 }
 
 export const initBuffers = gl => {
-  const props = getProps();
+  const props = getProps(100);
   console.log(props)
   
   let positions = props.pos;

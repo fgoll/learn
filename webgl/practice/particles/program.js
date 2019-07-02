@@ -14,8 +14,11 @@ const vec3 camera = vec3(0, 0, 1);
 float rand(vec2 co) {
   return fract(sin(dot(co, vec2(12, 7))) * 400.1);
 }
+// 伪随机数生成器
 void main() {
+  // 求出粒子相对于相机位置的单位方向向量，并附带上伪随机数的扰动
   vec3 dir = normalize(center.xyz * rand(center.xy) - camera);
+  // 沿扰动后的方向，随时间递增偏移量
   vec3 translatedPos = pos.xyz + dir * iTime;
   vec4 mvpPos = projectionMat * viewMat * vec4(translatedPos, 1);
   vTexCoord = texCoord;
