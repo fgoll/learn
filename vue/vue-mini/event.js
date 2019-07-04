@@ -66,6 +66,6 @@ EventEmitter.prototype.once = function(event, cb) {
     cb.apply(this, arguments)
   }
   on.fn = cb
-  this.on(event, cb)
+  this.on(event, on)
   return this
 }
