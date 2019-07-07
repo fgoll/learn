@@ -10,6 +10,7 @@
 
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
+  - [二维矩阵变换笔记](https://github.com/fgoll/learn/tree/master/opengl/day3)
   - [三维矩阵变换笔记](https://github.com/fgoll/learn/tree/master/opengl/day6)
 
 - /react 学习react源码并实现react小型框架
