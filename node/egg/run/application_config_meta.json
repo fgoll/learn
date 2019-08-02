@@ -1,0 +1,269 @@
+{
+  "keys": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js",
+  "view": {
+    "defaultViewEngine": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js",
+    "mapping": {
+      ".tpl": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js"
+    },
+    "root": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view/config/config.default.js",
+    "cache": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view/config/config.default.js",
+    "defaultExtension": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view/config/config.default.js"
+  },
+  "news": {
+    "pageSize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js",
+    "serverUrl": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js"
+  },
+  "middleware": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js",
+  "robot": {
+    "ua": "/Users/hong/Desktop/web/mylearn/learn/node/egg/config/config.default.js"
+  },
+  "session": {
+    "maxAge": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-session/config/config.default.js",
+    "key": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-session/config/config.default.js",
+    "httpOnly": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-session/config/config.default.js",
+    "encrypt": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-session/config/config.default.js"
+  },
+  "security": {
+    "domainWhiteList": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+    "protocolWhiteList": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+    "defaultMiddleware": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+    "csrf": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "useSession": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "ignoreJSON": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "cookieName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "sessionName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "headerName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "bodyName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "queryName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "xframe": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "hsts": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "maxAge": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "includeSubdomains": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "dta": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "methodnoallow": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "noopen": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "nosniff": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "referrerPolicy": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "xssProtection": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "value": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "csp": {
+      "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "policy": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    },
+    "ssrf": {
+      "ipBlackList": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js",
+      "checkAddress": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+    }
+  },
+  "helper": {
+    "shtml": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-security/config/config.default.js"
+  },
+  "jsonp": {
+    "limit": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-jsonp/config/config.default.js",
+    "callback": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-jsonp/config/config.default.js",
+    "csrf": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-jsonp/config/config.default.js"
+  },
+  "onerror": {
+    "errorPageUrl": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-onerror/config/config.default.js",
+    "appErrorFilter": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-onerror/config/config.default.js",
+    "templatePath": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-onerror/config/config.default.js"
+  },
+  "i18n": {
+    "defaultLocale": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js",
+    "dirs": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js",
+    "queryField": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js",
+    "cookieField": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js",
+    "cookieDomain": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js",
+    "cookieMaxAge": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-i18n/config/config.default.js"
+  },
+  "watcher": {
+    "type": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-watcher/config/config.unittest.js",
+    "eventSources": {
+      "default": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-watcher/config/config.default.js",
+      "development": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-watcher/config/config.default.js"
+    }
+  },
+  "customLogger": {
+    "scheduleLogger": {
+      "consoleLevel": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-schedule/config/config.default.js",
+      "file": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-schedule/config/config.default.js"
+    }
+  },
+  "schedule": {
+    "directory": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-schedule/config/config.default.js"
+  },
+  "multipart": {
+    "mode": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "autoFields": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "defaultCharset": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "fieldNameSize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "fieldSize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "fields": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "fileSize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "files": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "fileExtensions": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "whitelist": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "tmpdir": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js",
+    "cleanSchedule": {
+      "cron": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-multipart/config/config.default.js"
+    }
+  },
+  "logrotator": {
+    "filesRotateByHour": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "hourDelimiter": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "filesRotateBySize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "maxFileSize": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "maxFiles": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "rotateDuration": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js",
+    "maxDays": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-logrotator/config/config.default.js"
+  },
+  "static": {
+    "prefix": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js",
+    "dir": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js",
+    "dynamic": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js",
+    "preload": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js",
+    "buffer": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js",
+    "maxFiles": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-static/config/config.default.js"
+  },
+  "nunjucks": {
+    "autoescape": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view-nunjucks/config/config.default.js",
+    "throwOnUndefined": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view-nunjucks/config/config.default.js",
+    "trimBlocks": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view-nunjucks/config/config.default.js",
+    "lstripBlocks": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view-nunjucks/config/config.default.js",
+    "cache": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg-view-nunjucks/config/config.default.js"
+  },
+  "env": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "name": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "proxy": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "maxProxyCount": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "protocolHeaders": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "ipHeaders": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "hostHeaders": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "pkg": {
+    "name": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "version": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "description": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "main": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "scripts": {
+      "test": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "dev": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    },
+    "author": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "license": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "dependencies": {
+      "egg": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "egg-view-nunjucks": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    },
+    "devDependencies": {
+      "egg-bin": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "egg-mock": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    }
+  },
+  "baseDir": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "HOME": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "rundir": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "dump": {
+    "ignore": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "confusedConfigurations": {
+    "bodyparser": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "notFound": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "sitefile": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "middlewares": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "httpClient": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "notfound": {
+    "pageUrl": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "siteFile": {
+    "/favicon.ico": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "bodyParser": {
+    "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "formLimit": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "jsonLimit": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "strict": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "queryString": {
+      "arrayLimit": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "depth": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "parameterLimit": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    },
+    "onerror": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "logger": {
+    "dir": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "encoding": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "env": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "level": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "consoleLevel": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.unittest.js",
+    "disableConsoleAfterReady": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "outputJSON": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "buffer": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.unittest.js",
+    "appLogName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "coreLogName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "agentLogName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "errorLogName": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "coreLogger": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "allowDebugAtProd": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "httpclient": {
+    "enableDNSCache": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "dnsCacheLookupInterval": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "dnsCacheMaxLength": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "request": {
+      "timeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    },
+    "httpAgent": {
+      "keepAlive": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "freeSocketTimeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    },
+    "httpsAgent": {
+      "keepAlive": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "freeSocketTimeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "maxSockets": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "maxFreeSockets": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    }
+  },
+  "meta": {
+    "enable": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "logging": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "coreMiddleware": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "workerStartTimeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "serverTimeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+  "cluster": {
+    "listen": {
+      "path": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "port": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+      "hostname": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+    }
+  },
+  "clusterClient": {
+    "maxWaitTime": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js",
+    "responseTimeout": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+  },
+  "onClientError": "/Users/hong/Desktop/web/mylearn/learn/node/egg/node_modules/egg/config/config.default.js"
+}
