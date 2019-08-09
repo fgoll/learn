@@ -1,8 +1,9 @@
-# 2019.03.22 开始记录自己简单的记录学习
+# 2019.03.22 开始记录自己简单的学习
 
 
 - /data-structure 数据结构的学习
   - [数据结构-邓俊辉](https://courses.edx.org/courses/course-v1:TsinghuaX+30240184.1x+3T2017/course/)
+  - [离散数学](https://book.douban.com/subject/26316200/)
 
 - /webpack webpack的学习
   - [技术胖](https://jspang.com/posts/2017/09/16/webpack3.html)
@@ -22,7 +23,7 @@
   - [Vue技术内幕](http://hcysun.me/vue-design/art)
 - /webgl WebGL的学习
   - [WebGL编程指南](https://book.douban.com/subject/25909351/)
-
+  - [ray tracing in one weekend](http://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
 
 - /go Go的学习
   - [官方文档](https://tour.golang.org/)
