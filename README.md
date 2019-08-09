@@ -20,7 +20,7 @@
   
 - /mini-program 小程序方面的学习
 - /vue 学习vue源码及vue项目
-  - [Vue技术内幕](http://hcysun.me/vue-design/art)
+  - [Vue技术内幕](http://hcysun.me/vue-design/zh/essence-of-comp.html)
 - /webgl WebGL的学习
   - [WebGL编程指南](https://book.douban.com/subject/25909351/)
   - [ray tracing in one weekend](http://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
