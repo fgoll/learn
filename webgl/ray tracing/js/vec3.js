@@ -19,12 +19,14 @@ class vec3 {
     this._e[0] += v._e[0]
     this._e[1] += v._e[1]
     this._e[2] += v._e[2]
+    return this
   }
 
   minus(v) {
     this._e[0] -= v._e[0]
     this._e[1] -= v._e[1]
     this._e[2] -= v._e[2]
+    return this
   }
 
   multiply(v) {
@@ -37,6 +39,7 @@ class vec3 {
       this._e[1] *= v._e[1]
       this._e[2] *= v._e[2]
     }
+    return this
   } 
 
   divide(v) {
@@ -49,6 +52,7 @@ class vec3 {
       this._e[1] /= v._e[1]
       this._e[2] /= v._e[2]
     }
+    return this
   }
 
   length() {
@@ -65,6 +69,18 @@ class vec3 {
     this._e[1] *= k
     this._e[2] *= k
   }
+
+  copy() {
+    return new vec3(this.get(0), this.get(1), this.get(2))
+  }
 }
 
-module.exports = vec3
+function unit_vector(v) {
+  console.log(v)
+  return v.divide(v.length())
+}
+
+module.exports = {
+  vec3,
+  unit_vector,
+}
