@@ -75,6 +75,10 @@ class vec3 {
   }
 }
 
+function dot(v1, v2) {
+  return v1.get(0) * v2.get(0) + v1.get(1) * v2.get(1) + v1.get(2) * v2.get(2)
+}
+
 function unit_vector(v) {
   console.log(v)
   return v.divide(v.length())
@@ -82,5 +86,6 @@ function unit_vector(v) {
 
 module.exports = {
   vec3,
+  dot,
   unit_vector,
 }

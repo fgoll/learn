@@ -1,9 +1,23 @@
 let fs = require('fs');
 
 let ray = require('./ray')
-let {vec3, unit_vector} = require('./vec3')
+let { vec3, dot, unit_vector } = require('./vec3')
+
+function hit_sphere(center, radius, r) {
+  let oc = r.origin().copy()
+  oc.minus(center)
+
+  let a = dot(r.direction(), r.direction())
+  let b = 2.0 * dot(oc, r.direction())
+  let c = dot(oc, oc) - radius * radius
+  let discriminant = b * b - 4 * a * c
+  return discriminant > 0
+}
 
 function color(r) {
+  if (hit_sphere(new vec3(0, 0, -1), 0.5, r)) {
+    return new vec3(1, 0, 0)
+  }
   let unit_direction = unit_vector(r.direction())
   let t = 0.5 * (unit_direction.y() + 1.0)
   let start_value = new vec3(1.0, 1.0, 1.0)
