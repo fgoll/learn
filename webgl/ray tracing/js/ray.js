@@ -13,7 +13,10 @@ class ray {
   }
 
   point_at_parameter(t) {
-    return this._A + t * this._B
+    let _A = this._A.copy()
+    let _B = this._B.copy()
+
+    return _A.add(_B.multiply(t))
   }
 }
 

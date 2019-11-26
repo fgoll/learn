@@ -3,6 +3,8 @@ let fs = require('fs');
 let ray = require('./ray')
 let { vec3, dot, unit_vector } = require('./vec3')
 
+let CENTER = new vec3(0, 0, -1)
+
 function hit_sphere(center, radius, r) {
   let oc = r.origin().copy()
   oc.minus(center)
@@ -11,15 +13,23 @@ function hit_sphere(center, radius, r) {
   let b = 2.0 * dot(oc, r.direction())
   let c = dot(oc, oc) - radius * radius
   let discriminant = b * b - 4 * a * c
-  return discriminant > 0
+  if (discriminant < 0) {
+    return -1
+  }else {
+    return (-b - Math.sqrt(discriminant)) / (2 * a)
+  }
 }
 
 function color(r) {
-  if (hit_sphere(new vec3(0, 0, -1), 0.5, r)) {
-    return new vec3(1, 0, 0)
+  let t = hit_sphere(CENTER, 0.5, r)
+  if (t > 0.0) {
+    let N = unit_vector(r.point_at_parameter(t).minus(new vec3(0, 0, -1)))
+
+    return new vec3(N.x() + 1, N.y() + 1, N.z() + 1).multiply(0.5)
   }
+  
   let unit_direction = unit_vector(r.direction())
-  let t = 0.5 * (unit_direction.y() + 1.0)
+  t = 0.5 * (unit_direction.y() + 1.0)
   let start_value = new vec3(1.0, 1.0, 1.0)
   let end_value = new vec3(0.5, 0.7, 1.0)
   let blended_value = start_value.multiply(1.0 - t).add(end_value.multiply(t))
