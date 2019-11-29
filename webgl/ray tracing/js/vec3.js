@@ -80,7 +80,7 @@ function dot(v1, v2) {
 }
 
 function unit_vector(v) {
-  console.log(v)
+  // console.log(v)
   return v.divide(v.length())
 }
 
