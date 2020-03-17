@@ -8,15 +8,26 @@ let camera = require('./camera')
 
 let CENTER = new vec3(0, 0, -1)
 
+function random_in_unit_sphere() {
+  let p 
+  do {
+    p = new vec3(Math.random(), Math.random(), Math.random())
+  } while (p.squared_length() >= 1.0)
+
+  return p;
+}
+
 function color(r, world) {
   let rec = {}
   // console.log(rec)
-  if (world.hit(r, 0, Number.MAX_VALUE, rec)) {
-    return new vec3(rec.normal.x() + 1, rec.normal.y() + 1, rec.normal.z() + 1).multiply(0.5)
+  if (world.hit(r, 0.001, Number.MAX_VALUE, rec)) {
+    // console.log(rec.normal)
+
+    return color(new ray(rec.p, random_in_unit_sphere().add(rec.normal)), world).multiply(0.5) 
   }
   let unit_direction = unit_vector(r.direction())
   let t = 0.5 * (unit_direction.y() + 1.0)
-  let start_value = new vec3(1.0, 1.0, 1.0)
+  let start_value = new vec3(1.0, 0.0, 1.0)
   let end_value = new vec3(0.5, 0.7, 1.0)
   let blended_value = start_value.multiply(1.0 - t).add(end_value.multiply(t))
   return blended_value
@@ -37,8 +48,8 @@ function main() {
 
   for (let j = ny - 1; j >= 0; j --) {
     for (let i = 0; i < nx; i ++) {
-      let u = i / nx
-      let v = j / ny
+      // let u = i / nx
+      // let v = j / ny
       
       let col = new vec3(0, 0, 0)
       for (let s = 0; s < ns; s ++) {
