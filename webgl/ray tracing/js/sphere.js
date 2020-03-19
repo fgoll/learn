@@ -1,9 +1,10 @@
 let {  dot } = require('./vec3')
 module.exports = class sphere {
   
-  constructor(cen, r) {
+  constructor(cen, r, m) {
     this.center = cen
     this.radius = r
+    this.metal = m
   }
 
   hit(r, t_min, t_max, rec) {
@@ -20,6 +21,7 @@ module.exports = class sphere {
         rec.t = temp
         rec.p = r.point_at_parameter(temp)
         rec.normal = rec.p.copy().minus(this.center).divide(this.radius)
+        rec.metal = this.metal;
         return true
       }
       temp = (-b + Math.sqrt(discriminant)) / a
@@ -27,6 +29,7 @@ module.exports = class sphere {
         rec.t = temp
         rec.p = r.point_at_parameter(temp)
         rec.normal = rec.p.copy().minus(this.center).divide(this.radius)
+        rec.metal = this.metal;
         return true
       }
     }
