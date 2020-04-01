@@ -1,0 +1,27 @@
+{
+  "name": "PWA Manifest Demo", // 应用名称，使用场景为：1.启动页 2.安装提示
+  "short_name": "Manifest Demo", // 应用短名称，使用场景为：1.主屏幕 2.安装横幅
+  "start_url": "./index.html", // 启动应用时加载的 URL
+  "theme_color": "#4374A5", // 主题色
+  "background_color": "#4374A5", // 应用首次启动后，在启动网址呈现之前，浏览器会使用该色值填充屏幕，以便杜绝白屏，效果如上述中的启动页。
+  "display": "standalone", // 应用启动后的展现形式；其值可为： 1.fullscreen：页面占满整个屏幕。
+                                                     //  2.standalone：相对于 fullscreen，此模式还包含状态栏、返回按钮等其他系统 UI，该模式更接近原生应用
+                                                     //  3.minimal-ui：相对于 standalone，此模式还包含浏览器地址栏，地址栏样式取决于具体的浏览器。
+                                                     //  4.browser：使用操作系统内置的浏览器来打开应用。
+  "orientation": "natural",
+  //orientation：锁定屏幕旋转，强制指定应用的显示方向；其值可为：
+    // any：当屏幕切换到横屏时，以横屏方式显示，否则以竖屏方式显示。
+    // natural：如果屏幕的宽大于高，则以横屏显示，否则以竖屏方式显示。
+    // portrait：根据平台规则或屏幕旋转角度，自动取值 portrait-primary 或 portrait-secondary。
+    // portrait-primary：竖屏正方向。
+    // portrait-secondary：竖屏反方向，屏幕正方向按顺时针旋转 180°。
+    // landscape：根据平台规则或屏幕旋转角度，自动取值 landscape-primary 或 landscape-secondary。
+    // landscape-primary：横屏正方向，屏幕正方向按顺时针旋转 90°。
+    // landscape-secondary：横屏反方向，屏幕正方向按顺时针旋转 270°。
+
+  "icons": [{
+    "src": "images/launcher-icon.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }]
+}
