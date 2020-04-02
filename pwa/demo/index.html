@@ -12,7 +12,17 @@
   <script>
     window.addEventListener('load', function() {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js');
+
+        // 1. 注册成功仅仅表明指定脚本已成功解析，并不意味着 Service Worker 已经安装或处于激活状态。
+        // 2. scope 参数指定了 Service Worker 可接收 fetch 事件的作用域，
+        //    比如 scope 的值为 /mobile，
+        //    那么 Service Worker 便只能接收 path 以 /mobile 开头的 fetch 事件，默认值为 sw.js 所在路径。
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(function(registration) {
+
+        }).catch(function(err) {
+
+        });
       }
       let appPromptEvent = null;
       const installBtn = document.getElementById('installBtn');
