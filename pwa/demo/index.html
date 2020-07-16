@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#4374A5">
+  <title>PWA Manifest Demo</title>
+  <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+  <div>Hello PWA Manifest Demo<div>
+  <button hidden id="installBtn">安装应用</button>
+  <script>
+    window.addEventListener('load', function() {
+      if ('serviceWorker' in navigator) {
+
+        // 1. 注册成功仅仅表明指定脚本已成功解析，并不意味着 Service Worker 已经安装或处于激活状态。
+        // 2. scope 参数指定了 Service Worker 可接收 fetch 事件的作用域，
+        //    比如 scope 的值为 /mobile，
+        //    那么 Service Worker 便只能接收 path 以 /mobile 开头的 fetch 事件，默认值为 sw.js 所在路径。
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(function(registration) {
+
+        }).catch(function(err) {
+
+        });
+      }
+      let appPromptEvent = null;
+      const installBtn = document.getElementById('installBtn');
+      window.addEventListener('beforeinstallprompt', function(event) {
+        console.log('触发事件：beforeinstallprompt');
+        event.preventDefault();
+        appPromptEvent = event;
+        installBtn.hidden = false;
+        return false;
+      });
+      installBtn.addEventListener('click', function() {
+        if (appPromptEvent !== null) {
+          appPromptEvent.prompt();
+          appPromptEvent.userChoice.then(function(result) {
+            if (result.outcome === 'accepted') {
+              console.log('同意安装应用');
+            } else {
+              console.log('不同意安装应用');
+            }
+            appPromptEvent = null;
+          });
+        }
+      });
+      window.addEventListener('appinstalled', function() {
+        console.log('应用已安装');
+        installBtn.hidden = true;
+      });
+    });
+  </script>
+</body>
+</html>

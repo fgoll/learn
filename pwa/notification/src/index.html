@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Push & Notification Demo</title>
+</head>
+<body>
+  <button id="send-push">点击发送消息</button>
+  <script>
+    function urlB64ToUint8Array(base64String) {
+      const padding = '='.repeat((4 - base64String.length % 4) % 4);
+      const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+      const rawData = window.atob(base64);
+      const outputArray = new Uint8Array(rawData.length);
+      for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+    }
+
+    function getApplicationServerKey() {
+      return urlB64ToUint8Array(
+        'BG-yhL9IrK-BcGBb_qLLHChdhwHM1t-icB5U9u6XiNvFGJgOEsugP5X2NvCUlfZwMSSzRSoREQJk9c_TWStHkpc'
+      );
+    }
+
+    window.addEventListener('load', function() {
+      if ('serviceWorker' in navigator && 'PushManager' in window) {
+        navigator.serviceWorker.register('./sw.js').then(function(registration) {
+
+          console.log('Service Worker is registered', registration);
+          registration.pushManager.getSubscription().then(function(subscription) {
+            console.log('subscription', subscription)
+            if (subscription) {
+              console.log('通知已注册....');
+              return;
+            }
+            registration.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: getApplicationServerKey()
+            }).then(function(subscription) {
+              console.log('subscription', subscription)
+              fetch('/subscribe', {
+                headers: {
+                  'content-type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(subscription)
+              }).then(function(response) {
+                return response.json();
+              }).then(function() {
+                console.log('通知注册成功……');
+              }).catch(function() {
+                subscription.unsubscribe();
+                console.log('通知注册失败……');
+              })
+            });
+          });
+        });
+      }
+      document.getElementById('send-push').addEventListener('click', function() {
+        fetch('/push', { method: 'POST' });
+      });
+    });
+  </script>
+</body>
+</html>
