@@ -9,6 +9,8 @@
   - [技术胖](https://jspang.com/posts/2017/09/16/webpack3.html)
   - [diving-into-webpack](https://github.com/lihongxun945/diving-into-webpack)
 
+- /front-end/practice 杂七杂八的练习
+  
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
   - [二维矩阵变换笔记](https://github.com/fgoll/learn/tree/master/opengl/day3)
