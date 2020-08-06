@@ -34,3 +34,6 @@
 
 - /three three.js使用及源码学习
   - [Three.js开发指南](https://book.douban.com/subject/26349497/)
+
+### 阅读文章记录
+- [说说JS中的沙箱](https://juejin.im/post/6844903954074058760) - 2020.08.06
