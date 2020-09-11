@@ -19,6 +19,7 @@
 - /react 学习react源码并实现react小型框架
   - [react官方教程](https://react.docschina.org/tutorial/tutorial.html)
   - [React.js 小书](http://huziketang.mangojuice.top/books/react/lesson35)
+  - [React技术揭秘](https://react.iamkasong.com/)
   
 - /mini-program 小程序方面的学习
 - /vue 学习vue源码及vue项目
