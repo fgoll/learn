@@ -1,6 +1,8 @@
 # 2019.03.22 开始记录自己简单的学习
 
-
+- /compilers 编译原理的学习
+  - [计算的本质：深入剖析程序和计算机](https://book.douban.com/subject/26148763/)
+  
 - /data-structure 数据结构的学习
   - [数据结构-邓俊辉](https://courses.edx.org/courses/course-v1:TsinghuaX+30240184.1x+3T2017/course/)
   - [离散数学](https://book.douban.com/subject/26316200/)
