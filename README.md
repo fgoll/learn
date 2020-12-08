@@ -11,7 +11,9 @@
   - [技术胖](https://jspang.com/posts/2017/09/16/webpack3.html)
   - [diving-into-webpack](https://github.com/lihongxun945/diving-into-webpack)
 
-- /front-end/practice 杂七杂八的练习
+- /front-end 前端
+  - practice 杂七杂八的练习
+  - performance-optimization 性能优化
   
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
