@@ -1,3 +1,5 @@
+# 确定性下推自动机 
+
 class Stack <  Struct.new(:contents) 
   def push(character)
     Stack.new([character] + contents)
