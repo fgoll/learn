@@ -1,3 +1,4 @@
+# 词法分析
 
 class LexicalAnalyzer < Struct.new(:string)
   GRAMMAR = [
