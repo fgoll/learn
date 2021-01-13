@@ -155,3 +155,68 @@ dtm = DTM.new(TMConfiguration.new(1, tape), [6], rulebook)
 10.times { dtm.step }; dtm.current_configuration
 25.times { dtm.step }; dtm.current_configuration
 dtm.run; dtm.current_configuration
+
+
+# ====> 内部存储
+rulebook = DTMRulebook.new([ 
+  # 状态 1：从磁带读取第一个字符 
+  TMRule.new(1, 'a', 2, 'a', :right), # 记住 a 
+  TMRule.new(1, 'b', 3, 'b', :right), # 记住 b 
+  TMRule.new(1, 'c', 4, 'c', :right), # 记住 c
+  # 状态 2：向右扫描，查找字符串结束标记（记住 a） 
+  TMRule.new(2, 'a', 2, 'a', :right), # 跳过 a 
+  TMRule.new(2, 'b', 2, 'b', :right), # 跳过 b 
+  TMRule.new(2, 'c', 2, 'c', :right), # 跳过 c 
+  TMRule.new(2, '_', 5, 'a', :right), # 找到空格，写 a 
+  # 状态 3：向右扫描，查找字符串结束标记（记住 b） 
+  TMRule.new(3, 'a', 3, 'a', :right), # 跳过 a 
+  TMRule.new(3, 'b', 3, 'b', :right), # 跳过 b 
+  TMRule.new(3, 'c', 3, 'c', :right), # 跳过 c 
+  TMRule.new(3, '_', 5, 'b', :right), # 找到空格，写 b
+  # 状态 4：向右扫描，查找字符串结束标记（记住 c）
+  TMRule.new(4, 'a', 4, 'a', :right), # 跳过 a 
+  TMRule.new(4, 'b', 4, 'b', :right), # 跳过 b 
+  TMRule.new(4, 'c', 4, 'c', :right), # 跳过 c 
+  TMRule.new(4, '_', 5, 'c', :right) # 查找空格，写 c 
+])
+
+# 如果用这种方式利用当前状态，我们可以设计出任凭纸带头来回移动仍能记住之前任何组 
+# 合的图灵机，这实际上与给一台机器提供明确的“寄存器”作为内部存储有同样的能力， 
+# 只不过代价是使用了大量的状态
+tape = Tape.new([], 'a', ['c', 'b', 'c', 'a'], '_')
+
+dtm = DTM.new(TMConfiguration.new(1, tape), [5], rulebook)
+
+dtm.run; dtm.current_configuration.tape
+
+# ====> 子例程
+
+def increment_rules(start_state, return_state)
+  incrementing = start_state
+  finishing = Object.new
+  finished = return_state
+
+  [
+    TMRule.new(incrementing, '0', finishing, '1', :right),
+    TMRule.new(incrementing, '1', incrementing, '0', :left),
+    TMRule.new(incrementing, '_', finishing, '1', :right),
+    TMRule.new(finishing, '0', finishing, '0', :right),
+    TMRule.new(finishing, '1', finishing, '1', :right),
+    TMRule.new(finishing, '_', finished, '_', :left)
+  ]
+end
+
+added_zero, added_one, added_two, added_three = 0, 1, 2, 3
+
+rulebook = DTMRulebook.new(
+  increment_rules(added_zero, added_one) +
+  increment_rules(added_one, added_two) 
+)
+
+rulebook.rules.length
+
+tape = Tape.new(['1', '0', '1'], '1', [], '_')
+
+dtm = DTM.new(TMConfiguration.new(added_zero, tape), [added_two], rulebook)
+
+dtm.run; dtm.current_configuration.tape
