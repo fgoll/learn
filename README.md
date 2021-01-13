@@ -46,3 +46,4 @@
 - [说说JS中的沙箱](https://juejin.im/post/6844903954074058760) - 2020.08.06
 - [前端性能分析利器-Chrome性能分析&性能监视器](https://juejin.im/post/6844904045774110733) - 2020.09.16
 - [对 Parser 的误解](http://www.yinwang.org/blog-cn/2015/09/19/parser) - 2020.12.01
+- [使用 Service Worker 监控页面卡死/崩溃](https://github.com/fgoll/learn/issues/55) - 2021.01.13
