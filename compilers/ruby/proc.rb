@@ -62,7 +62,7 @@ DECREMENT = -> n { LEFT[n[SLIDE][PAIR[ZERO][ZERO]]] }
 ADD = -> m { -> n { n[INCREMENT][m] } }
 SUBTRACT = -> m { -> n { n[DECREMENT][m] } }
 MULTIPLY = -> m { -> n { n[ADD[m]][ZERO] }}
-POWER = -> m { -> n { n[MULTIPLE[m]][ONE] } }
+POWER = -> m { -> n { n[MULTIPLY[m]][ONE] } }
 
 to_integer(INCREMENT[ONE])
 
@@ -81,3 +81,73 @@ MOD =
       m
     ]
   }}
+
+Y = -> f { -> x { f[x[x]] }[-> x { f[x[x]] }] }
+
+Z = -> f { -> x { f[-> y { x[x][y] }] }[-> x { f[-> y { x[x][y] }] }] }
+
+MOD = 
+  Z[-> f { -> m { -> n {
+    IF[IS_LESS_OR_EQUAL[n][m]][
+      -> x {
+        f[SUBTRACT[m][n]][n][x]
+      }
+    ][
+      m
+    ]
+  }}}]
+
+to_integer(MOD[THREE][TWO])
+to_integer(MOD[
+  POWER[THREE][THREE]
+][
+  ADD[THREE][TWO]
+])
+
+(ONE..HUNDRED).map do |n| 
+  IF[IS_ZERO[MOD[n][FIFTEEN]]][ 
+    'FizzBuzz' 
+  ][IF[IS_ZERO[MOD[n][THREE]]][ 
+    'Fizz' 
+  ][IF[IS_ZERO[MOD[n][FIVE]]][ 
+    'Buzz' 
+  ][ 
+    n.to_s 
+  ]]] 
+end
+
+# 列表
+EMPTY = PAIR[TRUE][TRUE]
+UNSHIFT = -> l { -> x {
+  PAIR[FALSE][PAIR[x][l]]
+}}
+IS_EMPTY = LEFT
+FIRST = -> l { LEFT[RIGHT[l]] }
+REST = -> l { RIGHT[RIGHT[l]] }
+
+my_list = 
+  UNSHIFT[
+    UNSHIFT[
+      UNSHIFT[EMPTY][THREE]
+    ][TWO]
+  ][ONE]
+
+to_integer(FIRST[my_list])
+to_integer(FIRST[REST[my_list]])
+to_integer(FIRST[REST[REST[my_list]]])
+to_boolean(IS_EMPTY[my_list])
+
+def to_array(proc)
+  array = []
+
+  until to_boolean(IS_EMPTY[proc])
+    array.push(FIRST[proc])
+    proc = REST[proc]
+  end
+
+  array
+end
+
+to_array(my_list)
+
+to_array(my_list).map { |p| to_integer(p) }
