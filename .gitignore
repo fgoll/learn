@@ -6,3 +6,5 @@ images/
 .vscode
 xcuserdata
 myignore
+
+rust/*/target

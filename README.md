@@ -14,6 +14,8 @@
 - /front-end 前端
   - practice 杂七杂八的练习
   - performance-optimization 性能优化
+
+- /[rust](https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html) 
   
 - /opengl OpenGL的学习
   - [计算机图形学](https://item.jd.com/11591287.html)
