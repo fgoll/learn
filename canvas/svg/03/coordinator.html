@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+
+    svg {
+      display: block;
+      margin: 50px;
+      border: 1px solid #efefef;
+    }
+  </style>
+</head>
+<body>
+  <!-- 默认坐标 -->
+  <svg width="200" height="200">
+    <rect x="10" y="10" width="50" height="30" stroke="black" fill="none" />
+  </svg>
+
+  <!-- 明确单位 -->
+  <svg width="200" height="200">
+    <rect x="10mm" y="10mm" width="15mm" height="10mm" stroke="black" fill="none" />
+  </svg>
+
+  <!-- svg标签 单位 -->
+  <svg width="70mm" height="70mm">
+    <rect x="10" y="10" width="50" height="30" stroke="black" fill="none" />
+  </svg>
+
+  <!-- 视口坐标 -->
+  <svg width='4cm' height='5cm' viewBox="0 0 64 80">
+    <rect x="10" y="35" width="40" height="40" stroke="black" fill="none" />
+    <!-- 屋顶 -->
+    <polyline points="10 35, 30 7.68, 50 35" stroke="black" fill="none" />
+    <!-- 房门 -->
+    <polyline points="30 75, 30 55, 40 55, 40 75" stroke="black" fill="none" />
+  </svg>
+
+  <!-- meet -->
+  <svg width="45" height="135"  viewBox="0 0 140 170" preserveAspectRatio="xMinYMin meet">
+    <title>Cat</title>
+    <desc>Stick Figure of a Cat</desc>
+  
+    <circle cx="70" cy="95" r="50" style="stroke: black; fill: none" />
+  
+    <circle cx="55" cy="80" r="5" stroke="black" fill="#339933" />
+    <circle cx="85" cy="80" r="5" stroke="black" fill="#339933" />
+  
+    <g id="whiskers">
+      <line x1="75" y1="95" x2="135" y2="85" stroke="black" />
+      <line x1="75" y1="95" x2="135" y2="105" stroke="black" />
+    </g>
+  
+    <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)" />
+  
+    <!-- 耳朵 -->
+    <polyline points="108 62, 90 10, 70 45, 50 10, 32 62" stroke="black" />
+    <!-- 嘴 -->
+    <polyline points="35 110, 45 120, 95 120, 105 110" stroke='black' fill='none' />
+    <!-- 鼻子 -->
+    <path d="M 75 90 L 65 90 A 5 10 0 0 0 75 90" stroke="black" fill="#ffcccc" />
+  
+    <text x="60" y="165" style="font-family: sans-serif; font-size: 14px; stroke: none; fill: black">Cat</text>
+  
+  </svg>
+
+  <svg width="45" height="135"  viewBox="0 0 140 170" preserveAspectRatio="xMidYMid meet">
+    <title>Cat</title>
+    <desc>Stick Figure of a Cat</desc>
+  
+    <circle cx="70" cy="95" r="50" style="stroke: black; fill: none" />
+  
+    <circle cx="55" cy="80" r="5" stroke="black" fill="#339933" />
+    <circle cx="85" cy="80" r="5" stroke="black" fill="#339933" />
+  
+    <g id="whiskers">
+      <line x1="75" y1="95" x2="135" y2="85" stroke="black" />
+      <line x1="75" y1="95" x2="135" y2="105" stroke="black" />
+    </g>
+  
+    <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)" />
+  
+    <!-- 耳朵 -->
+    <polyline points="108 62, 90 10, 70 45, 50 10, 32 62" stroke="black" />
+    <!-- 嘴 -->
+    <polyline points="35 110, 45 120, 95 120, 105 110" stroke='black' fill='none' />
+    <!-- 鼻子 -->
+    <path d="M 75 90 L 65 90 A 5 10 0 0 0 75 90" stroke="black" fill="#ffcccc" />
+  
+    <text x="60" y="165" style="font-family: sans-serif; font-size: 14px; stroke: none; fill: black">Cat</text>
+  
+  </svg>
+
+  <svg width="45" height="135"  viewBox="0 0 140 170" preserveAspectRatio="xMaxYMax meet">
+    <title>Cat</title>
+    <desc>Stick Figure of a Cat</desc>
+  
+    <circle cx="70" cy="95" r="50" style="stroke: black; fill: none" />
+  
+    <circle cx="55" cy="80" r="5" stroke="black" fill="#339933" />
+    <circle cx="85" cy="80" r="5" stroke="black" fill="#339933" />
+  
+    <g id="whiskers">
+      <line x1="75" y1="95" x2="135" y2="85" stroke="black" />
+      <line x1="75" y1="95" x2="135" y2="105" stroke="black" />
+    </g>
+  
+    <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)" />
+  
+    <!-- 耳朵 -->
+    <polyline points="108 62, 90 10, 70 45, 50 10, 32 62" stroke="black" />
+    <!-- 嘴 -->
+    <polyline points="35 110, 45 120, 95 120, 105 110" stroke='black' fill='none' />
+    <!-- 鼻子 -->
+    <path d="M 75 90 L 65 90 A 5 10 0 0 0 75 90" stroke="black" fill="#ffcccc" />
+  
+    <text x="60" y="165" style="font-family: sans-serif; font-size: 14px; stroke: none; fill: black">Cat</text>
+  
+  </svg>
+
+  <!-- slice -->
+  <svg width="45" height="135"  viewBox="0 0 140 170" preserveAspectRatio="xMinYMax slice">
+    <title>Cat</title>
+    <desc>Stick Figure of a Cat</desc>
+  
+    <circle cx="70" cy="95" r="50" style="stroke: black; fill: none" />
+  
+    <circle cx="55" cy="80" r="5" stroke="black" fill="#339933" />
+    <circle cx="85" cy="80" r="5" stroke="black" fill="#339933" />
+  
+    <g id="whiskers">
+      <line x1="75" y1="95" x2="135" y2="85" stroke="black" />
+      <line x1="75" y1="95" x2="135" y2="105" stroke="black" />
+    </g>
+  
+    <use xlink:href="#whiskers" transform="scale(-1 1) translate(-140 0)" />
+  
+    <!-- 耳朵 -->
+    <polyline points="108 62, 90 10, 70 45, 50 10, 32 62" stroke="black" />
+    <!-- 嘴 -->
+    <polyline points="35 110, 45 120, 95 120, 105 110" stroke='black' fill='none' />
+    <!-- 鼻子 -->
+    <path d="M 75 90 L 65 90 A 5 10 0 0 0 75 90" stroke="black" fill="#ffcccc" />
+  
+    <text x="60" y="165" style="font-family: sans-serif; font-size: 14px; stroke: none; fill: black">Cat</text>
+  
+  </svg>
+</body>
+</html>
