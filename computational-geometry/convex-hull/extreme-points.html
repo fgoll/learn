@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    html, body { height: 100%; }
+    body {
+      background: black;
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      background: #fff;
+
+    }
+  </style>
+</head>
+<body>
+  <canvas id='canvas' width="500" height="500"></canvas>
+  <button id='button'>开始</button>
+  <script>
+    const canvas = document.getElementById('canvas')
+
+    const context = canvas.getContext('2d');
+
+    const points = []
+
+    canvas.onmousedown = function(ev) {
+      var x = ev.clientX,
+          y = ev.clientY
+        var rect = ev.target.getBoundingClientRect()
+        x = ((x - rect.left));
+        y = (y - rect.top);
+        points.push({
+          x,
+          y,
+          extreme: true
+        });
+
+        draw()
+    }
+
+    button.onclick = compute
+
+    function draw() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      console.log(points)
+      let lines = []
+      for (let point of points) {
+        context.beginPath()
+        context.fillStyle = point.extreme ? "blue" : "black"
+        if (point.extreme) {
+          lines.push(point)
+        }
+        context.arc(point.x, point.y, 5, 0, Math.PI * 2, true)
+        context.closePath()
+        context.fill()
+      }
+
+      // context.beginPath()
+      // context.moveTo(lines[0].x, lines[0].y)
+      // for (let line of lines) {
+      //   context.lineTo(line.x, line.y)
+      //   context.moveTo(line.x, line.y)
+      //   context.closePath();
+      //   context.stroke()
+      // }
+
+    }
+
+    function compute() {
+      for (let i = 0; i < points.length; i ++) {
+        for (let j = i + 1; j < points.length; j ++) {
+          for (let k = j + 1; k < points.length; k ++) {
+            for (let z = 0; z < points.length; z ++) {
+              let p = points[i]
+              let q = points[j]
+              let r = points[k]
+              let s = points[z]
+
+              if (s == p || s == q || s == r || !s.extreme) continue
+
+              let pqLeft = ToLeft(p, q, s)
+              let qrLeft = ToLeft(q, r, s)
+              let rpLeft = ToLeft(r, p, s) 
+
+              if (pqLeft === qrLeft && rpLeft === pqLeft) {
+                s.extreme = false
+              }
+            }
+          }
+        }
+      }
+
+      draw()
+    }
+
+    function ToLeft(p, q, s) {
+      return area(p, q, s) > 0
+    }
+
+    /**
+     *      | p.x p.y 1 |
+     * 2S = | q.x q.y 1 |
+     *      | s.x s.y 1 |
+     */
+    function area(p, q, s) {
+      return p.x * q.y - p.x * s.y - p.y * q.x + p.y * s.x + q.x * s.y - q.y * s.x
+    }
+  </script>
+</body>
+</html>
