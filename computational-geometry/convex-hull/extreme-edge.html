@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>凸包极点算法</title>
+  <title>凸包极边算法</title>
 
   <style>
     html, body { height: 100%; }
@@ -32,6 +32,8 @@
 
     const points = []
 
+    let lines = []
+
     canvas.onmousedown = function(ev) {
       var x = ev.clientX,
           y = ev.clientY
@@ -41,7 +43,7 @@
         points.push({
           x,
           y,
-          extreme: true
+          extreme: false
         });
 
         draw()
@@ -51,50 +53,45 @@
 
     function draw() {
       context.clearRect(0, 0, canvas.width, canvas.height);
-      console.log(points)
-      let lines = []
+      console.log(lines)
       for (let point of points) {
         context.beginPath()
         context.fillStyle = point.extreme ? "blue" : "black"
-        if (point.extreme) {
-          lines.push(point)
-        }
         context.arc(point.x, point.y, 5, 0, Math.PI * 2, true)
         context.closePath()
         context.fill()
       }
-
-      // context.beginPath()
-      // context.moveTo(lines[0].x, lines[0].y)
-      // for (let line of lines) {
-      //   context.lineTo(line.x, line.y)
-      //   context.moveTo(line.x, line.y)
-      //   context.closePath();
-      //   context.stroke()
-      // }
+      for (let i = 0; i < lines.length; i ++) {
+        const [p, q] = lines[i]
+        context.beginPath()
+        context.moveTo(p.x, p.y)
+        context.lineTo(q.x, q.y)
+        context.closePath()
+        context.stroke()
+      }
 
     }
 
     function compute() {
+      lines = []
+      points.forEach(point => point.extreme = false)
       for (let i = 0; i < points.length; i ++) {
         for (let j = i + 1; j < points.length; j ++) {
-          for (let k = j + 1; k < points.length; k ++) {
-            for (let z = 0; z < points.length; z ++) {
-              let p = points[i]
-              let q = points[j]
-              let r = points[k]
-              let s = points[z]
+          let p = points[i]
+          let q = points[j]
+          let LEmpty = true, REmpty = true
+          for (let z = 0; z < points.length; z ++) {
+            let r = points[z]
 
-              if (s == p || s == q || s == r || !s.extreme) continue
+            if (r == p || r == q) continue
 
-              let pqLeft = ToLeft(p, q, s)
-              let qrLeft = ToLeft(q, r, s)
-              let rpLeft = ToLeft(r, p, s) 
+            ToLeft(p, q, r) ? LEmpty = false : REmpty = false
 
-              if (pqLeft === qrLeft && rpLeft === pqLeft) {
-                s.extreme = false
-              }
-            }
+          }
+          if (LEmpty || REmpty) {
+            p.extreme = true
+            q.extreme = true
+            lines.push([p, q])
           }
         }
       }
