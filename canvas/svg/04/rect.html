@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <svg width="200px" height="200px" viewBox="0 0 200 200">
+    <!-- 内部填充为黑色 -->
+    <rect x="10" y="10" width="30" height="50" />
+
+    <!-- 内部不填充颜色, 绘制黑色边框 -->
+    <rect x="50" y="10" width="20" height="40" />
+
+    <!-- 内部填充为蓝色, 绘制较粗的、半透明红色边框 -->
+    <rect x="10" y="70" width="25" height="30" style="fill: #0000ff; stroke: red; stroke-width: 7; stroke-opacity: 0.5;" />
+
+    <!-- 内部填充为半透明的黄色, 用虚线绘制绿色边框 -->
+    <rect x="50" y="70" width="35" height="20" style="fill: yellow; fill-opacity: 0.5; stroke-width: 2; stroke: green; stroke-dasharray: 5 2;" />
+  </svg>
+
+  <!-- 圆角矩形 -->
+  <svg width="200px" height="200px" viewBox="0 0 200 200">
+    <rect x="10" y="10" width="20" height="40" rx="2" ry="2" style="stroke: black; fill: none;" />
+    <rect x="50" y="10" width="20" height="40" rx="5" ry="30" style="stroke: black; fill: none;" />
+  </svg>
+</body>
+</html>

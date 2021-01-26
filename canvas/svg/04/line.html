@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>  
+
+  <svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- 水平线段 -->
+    <line x1="30" y1="10" x2="80" y2="10" style="stroke: black;" />
+    <!-- 垂直线段 -->
+    <line x1="0.7cm" y1="1cm" x2="0.7cm" y2="2.0cm" style="stroke: black;" />
+    <!-- 对角线段 -->
+    <line x1="30" y1="30" x2="85" y2="85" style="stroke: black;" />
+  </svg>
+
+  <!-- stroke-width -->
+  <svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- 水平线段 -->
+    <line x1="30" y1="10" x2="80" y2="10" style="stroke: black; stroke-width: 10;" />
+    <!-- 垂直线段 -->
+    <line x1="10" y1="30" x2="10" y2="80" style="stroke: black; stroke-width: 10;" />
+    <!-- 对角线段 -->
+    <line x1="25" y1="25" x2="75" y2="75" style="stroke: black; stroke-width: 10;" />
+  </svg>
+
+  <!-- 颜色 -->
+  <svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- 淡蓝色 -->
+    <line x1="10" y1="10" x2="50" y2="10" style="stroke: #9999ff; stroke-width: 5;" />
+    <!-- 红色 -->
+    <line x1="10" y1="20" x2="50" y2="20" style="stroke: red; stroke-width: 5;" />
+    <!-- 淡绿色 -->
+    <line x1="10" y1="30" x2="50" y2="30" style="stroke: #9f9; stroke-width: 5;" />
+    <!-- 橘色 -->
+    <line x1="10" y1="40" x2="50" y2="40" style="stroke: rgb(255, 128, 64); stroke-width: 5;" />
+    <!-- 深紫色 -->
+    <line x1="10" y1="50" x2="50" y2="50" style="stroke: rgb(60%, 20%, 60%); stroke-width: 5;" />
+  </svg>
+
+  <!-- stroke-opacity -->
+  <svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- 淡蓝色 -->
+    <line x1="10" y1="10" x2="50" y2="10" style="stroke: #9999ff; stroke-width: 5;" />
+    <!-- 红色 -->
+    <line x1="10" y1="20" x2="50" y2="20" style="stroke: red; stroke-width: 5; stroke-opacity: 0.2" />
+    <!-- 淡绿色 -->
+    <line x1="10" y1="30" x2="50" y2="30" style="stroke: #9f9; stroke-width: 5; stroke-opacity: 0.4" />
+    <!-- 橘色 -->
+    <line x1="10" y1="40" x2="50" y2="40" style="stroke: rgb(255, 128, 64); stroke-width: 5; stroke-opacity: 0.6" />
+    <!-- 深紫色 -->
+    <line x1="10" y1="50" x2="50" y2="50" style="stroke: rgb(60%, 20%, 60%); stroke-width: 5; stroke-opacity: 0.8" />
+  </svg>
+
+  <!-- stroke-dasharray -->
+  <svg width="200px" height="200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- 9个像素的虚线, 5个像素的空隙 -->
+    <line x1="10" y1="10" x2="50" y2="10" style="stroke: #9999ff; stroke-dasharray: 9, 5;" />
+    <!-- 5个像素的虚线, 3个像素的空隙, 9个像素的虚线, 2个像素的空隙 -->
+    <line x1="10" y1="20" x2="50" y2="20" style="stroke: red; stroke-dasharray: 5, 3, 9, 2" />
+    <!-- 复制奇数个数: 相当于9个像素的虚线, 3个像素的空隙, 5个像素的虚线, 9个像素的空隙, 3个像素达到虚线, 5个像素的空隙 -->
+    <line x1="10" y1="40" x2="50" y2="40" style="stroke: rgb(255, 128, 64);  stroke-dasharray: 9, 3, 5" />
+  </svg>
+</body>
+</html>
