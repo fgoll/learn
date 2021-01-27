@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis March</title>
+  <!-- 借鉴SelectionSort的思想, 每次选择最大的元素归到有序部分, 在这我们就可能可以缩小下一个候选者的范围, 每次可以沿着构造出来
+      边的端点向后继续找到extreme edge 
+    -->
+    
+  <style>
+    html, body { height: 100%; }
+    body {
+      background: black;
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      background: #fff;
+
+    }
+  </style>
+</head>
+<body>
+  <canvas id='canvas' width="500" height="500"></canvas>
+  <button id='button'>开始</button>
+  <script>
+    const canvas = document.getElementById('canvas')
+
+    const context = canvas.getContext('2d');
+
+    const points = []
+
+    canvas.onmousedown = function(ev) {
+      var x = ev.clientX,
+          y = ev.clientY
+        var rect = ev.target.getBoundingClientRect()
+        x = ((x - rect.left));
+        y = (y - rect.top);
+        points.push({
+          x,
+          y,
+          succ: null,
+          extreme: false
+        });
+
+        draw()
+    }
+
+    button.onclick = compute
+
+    function draw() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      let linePoint
+      for (let point of points) {
+        if (point.extreme) { linePoint = point; }
+        context.beginPath()
+        context.fillStyle = point.extreme ? "blue" : "black"
+        context.arc(point.x, point.y, 5, 0, Math.PI * 2, true)
+        context.closePath()
+        context.fill()
+      }
+      if (!linePoint) return
+      let start = linePoint
+      do { 
+        const [p, q] = [linePoint, linePoint.succ]
+        context.beginPath()
+        context.moveTo(p.x, p.y)
+        context.lineTo(q.x, q.y)
+        context.closePath()
+        context.stroke()
+        linePoint = linePoint.succ
+      } while (linePoint !== start)
+
+    }
+
+    function compute() {
+      points.forEach(point => point.extreme = false)
+
+      let ltl = LTL(points)
+      let kpoint = ltl
+
+      do {
+        kpoint.extreme = true
+        let s = -1
+        for (let t = 0; t < points.length; t ++) {
+          if (points[t] !== kpoint && points[s] !== kpoint && (s === -1 || !ToLeft(kpoint, points[s], points[t]))) {
+            s = t
+          }
+        }
+        kpoint.succ = points[s]
+        kpoint = points[s]
+        
+      } while (ltl !== kpoint)
+      
+
+      draw()
+    }
+
+    function LTL(points) {
+      let minPoint = null
+
+      for (let point of points) {
+        if (!minPoint || point.y <= minPoint.y) {
+          minPoint = point
+
+          if (minPoint.x < point.x) {
+            minPoint = point
+          } 
+        }
+      }
+
+      return minPoint
+    }
+
+    function ToLeft(p, q, s) {
+      return area(p, q, s) > 0
+    }
+
+    /**
+     *      | p.x p.y 1 |
+     * 2S = | q.x q.y 1 |
+     *      | s.x s.y 1 |
+     */
+    function area(p, q, s) {
+      return p.x * q.y - p.x * s.y - p.y * q.x + p.y * s.x + q.x * s.y - q.y * s.x
+    }
+  </script>
+</body>
+</html>
