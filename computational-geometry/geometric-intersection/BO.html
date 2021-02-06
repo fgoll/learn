@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bentley & Ottmann's algorithm</title>
+  <style>
+    html, body { height: 100%; }
+    body {
+      background: black;
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      background: #fff;
+
+    }
+  </style>
+</head>
+<body>
+  <canvas id='canvas' width="500" height="500"></canvas>
+  <button id='button'>开始</button>
+
+  <script src="./pq_complHeap.js"></script>
+  <script>
+    const canvas = document.getElementById('canvas')
+
+    const context = canvas.getContext('2d');
+
+    const lines = []
+
+    for (let i = 0; i < 10; i ++) {
+      const x = 100 + Math.random() * 300;
+      const y = 100 + Math.random() * 50
+      lines.push({
+        tag: i+1,
+        begin: {
+          x, y
+        },
+        end: {
+          x: x + 10 + Math.random() * 50,
+          y: y  + (Math.random() > 0.5 ? (+ 10 + Math.random() * 50)  : - 10 - Math.random() * 50),
+        }
+      })
+    }
+
+    button.onclick = compute
+    const colors=['yellow', 'green', 'blue', 'red', 'orange', 'purple', 'black', 'greenyellow', 'olive', 'pink']
+
+    function draw() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      
+      let index = 1
+      for (let line of lines) {
+        const {begin, end} = line
+
+        context.beginPath()
+        context.strokeStyle=colors[line.tag-1]
+        context.moveTo(begin.x, begin.y)
+        context.lineTo(end.x, end.y)
+
+        context.closePath()
+
+        context.stroke()
+
+
+        context.fillStyle = "black"
+        context.fillText(`${line.tag}`, begin.x - 3, begin.y + 3)
+        index ++
+      }
+    }
+
+    draw()
+
+    function compute() {
+      
+      // lines.sort((a, b) => {
+      //   return a.begin.x - b.begin.x
+      // })
+
+      let pq = new PQ_ComplHeap()
+      let index = 1
+      for (let line of lines) {
+        
+        pq.insertH({
+          point: line.begin,
+          type: 'begin',
+          line: line,
+          tag: index
+        })
+        pq.insertH({
+          point: line.end,
+          type: 'end',
+          line: line,
+          tag: index
+        })
+        index ++
+      }
+
+      const sweepline = {
+        next: null
+      }
+      let curr
+      while (!pq.empty()) {
+        let event = pq.delMax()
+        curr = sweepline.next
+        let line = event.line
+        if (!curr) {
+          curr = {
+            line,
+            next: null,
+            prev: sweepline
+          }
+          sweepline.next = curr
+        } else {
+          let node = {
+            line,
+            next: null,
+            prev: null
+          }
+          if (event.type === 'begin') {
+            let temp = sweepline.next
+            while (temp) {
+              if (temp.line.begin.y < node.line.begin.y) {
+                if (temp.next) {
+                  if (temp.next.line.begin.y > node.line.begin.y) {
+                    if (temp.next.next) {
+                      temp.next.next.prev = node
+                      node.next = temp.next.next
+                    }
+  
+                    temp.next = node
+                    node.prev = temp
+                    break
+                  } 
+                } else {
+                  temp.next = node
+                  node.prev = temp
+                  break
+                } 
+              } else {
+                temp.prev.next = node
+                node.prev = temp.prev
+                temp.prev = node
+              }
+              temp = temp.next
+            }
+            
+            let prev = node.prev
+
+            if (prev.line && isIntersection(prev.line, node.line)) {
+              pq.insertH({
+                line: node.line,
+                line2: prev.line,
+                type: 'intersect',
+                point: segmentsIntr(prev.line.begin, prev.line.end, node.line.begin, node.line.end)
+              })
+            }
+  
+            let next = node.next
+            if (next && isIntersection(next.line, node.line)) {
+              pq.insertH({
+                line: node.line,
+                line2: next.line,
+                type: 'intersect',
+                point: segmentsIntr(next.line.begin, next.line.end, node.line.begin, node.line.end)
+              })
+            }
+
+          } 
+          else if (event.type === 'end') {
+            let temp = sweepline.next
+            while (temp) {
+              if (temp.line.tag === event.line.tag) {
+                let next = temp.next 
+                let prev = temp.prev
+
+                prev.next = next
+                if (next) {
+                  next.prev = prev
+                  if (prev.line && isIntersection(prev.line, next.line)) {
+                    pq.insertH({
+                      line: next.line,
+                      line2: prev.line,
+                      type: 'intersect',
+                      point: segmentsIntr(next.line.begin, next.line.end, prev.line.begin, prev.line.end)
+                    })
+                  }
+                }
+
+                break
+              }
+              temp = temp.next
+            }
+          } else {
+            console.log('交点', event.line.tag, event.line2.tag)
+            let temp = sweepline.next
+            while (temp) {
+              if (temp.line.tag === event.line.tag) {
+
+                if (temp.prev.line.tag === event.line2.tag) {
+                  temp.line = event.line2
+                  temp.prev.line = event.line
+
+                  let prev = temp.prev
+
+                  if (prev.prev.line) {
+                    if (isIntersection(prev.prev.line, prev.line)) { 
+                      pq.insertH({
+                        line: prev.prev.line,
+                        line2: prev.line,
+                        type: 'intersect',
+                        point: segmentsIntr(prev.prev.line.begin, prev.prev.line.end, prev.line.begin, prev.line.end)
+                      })
+                    }
+                  }
+                  if (temp.next) {
+                    if (isIntersection(temp.next.line, temp.line)) { 
+                      pq.insertH({
+                        line: temp.next.line,
+                        line2: temp.line,
+                        type: 'intersect',
+                        point: segmentsIntr(temp.next.line.begin, temp.next.line.end, temp.line.begin, temp.line.end)
+                      })
+                    }
+                  }
+                } else {
+                  temp.line = event.line2
+                  temp.next.line = event.line
+
+                  if (temp.prev.line) {
+                    if (isIntersection(temp.prev.line, temp.line)) { 
+                      pq.insertH({
+                        line: temp.prev.line,
+                        line2: temp.line,
+                        type: 'intersect',
+                        point: segmentsIntr(temp.prev.line.begin, temp.prev.line.end, temp.line.begin, temp.line.end)
+                      })
+                    }
+                  }
+                  let next = temp.next
+                  if (next.next) {
+                    if (isIntersection(next.next.line, temp.line)) { 
+                      pq.insertH({
+                        line: next.next.line,
+                        line2: next.line,
+                        type: 'intersect',
+                        point: segmentsIntr(next.next.line.begin, next.next.line.end, next.line.begin, next.line.end)
+                      })
+                    }
+                  }
+                }
+                break
+              }
+              temp = temp.next
+            } 
+          }
+        }
+
+      }
+
+
+      console.log(pq)
+
+      draw()
+    }
+
+    function isIntersection(a, b) {
+      return ToLeft(b.begin, b.end, a.begin) !== ToLeft(b.begin, b.end, a.end) &&
+      ToLeft(a.begin, a.end, b.begin) !== ToLeft(a.begin, a.end, b.end)
+    }
+
+    function LTL(points) {
+      let minPoint = null
+
+      for (let point of points) {
+        if (!minPoint || point.y <= minPoint.y) {
+          minPoint = point
+
+          if (minPoint.x < point.x) {
+            minPoint = point
+          } 
+        }
+      }
+
+      return minPoint
+    }
+
+    function ToLeft(p, q, s) {
+      return area(p, q, s) > 0
+    }
+
+    /**
+     *      | p.x p.y 1 |
+     * 2S = | q.x q.y 1 |
+     *      | s.x s.y 1 |
+     */
+    function area(p, q, s) {
+      return p.x * q.y - p.x * s.y - p.y * q.x + p.y * s.x + q.x * s.y - q.y * s.x
+    }
+
+    function segmentsIntr(a, b, c, d){  
+  
+  /** 1 解线性方程组, 求线段交点. **/  
+  // 如果分母为0 则平行或共线, 不相交  
+      var denominator = (b.y - a.y)*(d.x - c.x) - (a.x - b.x)*(c.y - d.y);  
+      if (denominator==0) {  
+          return false;  
+      }  
+     
+  // 线段所在直线的交点坐标 (x , y)      
+      var x = ( (b.x - a.x) * (d.x - c.x) * (c.y - a.y)   
+                  + (b.y - a.y) * (d.x - c.x) * a.x   
+                  - (d.y - c.y) * (b.x - a.x) * c.x ) / denominator ;  
+      var y = -( (b.y - a.y) * (d.y - c.y) * (c.x - a.x)   
+                  + (b.x - a.x) * (d.y - c.y) * a.y   
+                  - (d.x - c.x) * (b.y - a.y) * c.y ) / denominator;  
+    
+  /** 2 判断交点是否在两条线段上 **/  
+      if (  
+          // 交点在线段1上  
+          (x - a.x) * (x - b.x) <= 0 && (y - a.y) * (y - b.y) <= 0  
+          // 且交点也在线段2上  
+           && (x - c.x) * (x - d.x) <= 0 && (y - c.y) * (y - d.y) <= 0  
+          ){  
+    
+          // 返回交点p  
+          return {  
+                  x :  x,  
+                  y :  y  
+              }  
+      }  
+      //否则不相交  
+      return false  
+    
+  }  
+  </script>
+</body>
+</html>
