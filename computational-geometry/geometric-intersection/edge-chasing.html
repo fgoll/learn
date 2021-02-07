@@ -34,6 +34,8 @@
 
     const context = canvas.getContext('2d');
 
+    const height = 500;
+
     let points = []
 
     const polygons = []
@@ -43,7 +45,7 @@
           y = ev.clientY
         var rect = ev.target.getBoundingClientRect()
         x = ((x - rect.left));
-        y = (y - rect.top);
+        y = rect.height - (y - rect.top);
         points.push({
           x,
           y,
@@ -68,11 +70,11 @@
         if (point.extreme) { linePoint = point; }
         context.beginPath()
         context.fillStyle = point.extreme ? "blue" : "black"
-        context.arc(point.x, point.y, 5, 0, Math.PI * 2, true)
+        context.arc(point.x, height - point.y, 5, 0, Math.PI * 2, true)
         context.closePath()
         context.fill()
         context.fillStyle = "white"
-        context.fillText(`${index}`, point.x - 3, point.y + 3)
+        context.fillText(`${index}`, point.x - 3, height - point.y - 3)
         index++
       }
 
@@ -84,19 +86,19 @@
           const [p, q] = [temp, temp.succ]
           context.beginPath()
           context.fillStyle = point.extreme ? "blue" : "black"
-          context.arc(p.x, p.y, 5, 0, Math.PI * 2, true)
+          context.arc(p.x, height - p.y, 5, 0, Math.PI * 2, true)
           context.closePath()
           context.fill()
 
           context.beginPath()
-          context.moveTo(p.x, p.y)
-          context.lineTo(q.x, q.y)
+          context.moveTo(p.x, height - p.y)
+          context.lineTo(q.x, height - q.y)
           context.closePath()
           context.stroke()
 
 
           context.fillStyle = "black"
-          context.fillText(`${index}`, (p.x + q.x)/2, (p.y+q.y)/2 + 3)
+          context.fillText(`${index}`, (p.x + q.x)/2, ( (height -p.y+ height -q.y))/2 + 3)
           temp = temp.succ
           index++
         } while(temp !== polygon)
@@ -144,6 +146,9 @@
       let tempE = startE
       let tempF = startF
 
+      let lengthE = 0
+      let lengthF = 0
+
       do {
 
         let E = tempE.succ
@@ -162,16 +167,18 @@
 
         console.log(LF, LE, cross(e, f), cross(f, e), (!LF && cross(e, f) > 0) || (LF && cross(e, f) < 0), (!LE && cross(f, e) > 0) || (LE && cross(f, e) < 0))
 
-        if ((!LF && cross(e, f) > 0) || (LF && cross(e, f) < 0)) {
+        if ((!LF && cross(e, f) < 0) || (LF && cross(e, f) > 0)) {
           tempF = tempF.succ
+          lengthF ++
         } 
         
-        if ((!LE && cross(f, e) > 0) || (LE && cross(f, e) < 0)) {
+        else if ((!LE && cross(f, e) < 0) || (LE && cross(f, e) > 0)) {
           tempE = tempE.succ
+          lengthE ++
         } 
 
 
-      } while (startE !== tempE)
+      } while ((!lengthE || startE !== tempE) && (!lengthF || startF !== tempF))
     }
 
     function LTL(points) {
@@ -191,7 +198,7 @@
     }
 
     function ToLeft(p, q, s) {
-      return area(p, q, s) < 0
+      return area(p, q, s) > 0
     }
 
     /**
