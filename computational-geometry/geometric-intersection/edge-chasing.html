@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jarvis March</title>
-  <!-- 借鉴SelectionSort的思想, 每次选择最大的元素归到有序部分, 在这我们就可能可以缩小下一个候选者的范围, 每次可以沿着构造出来
-      边的端点向后继续找到extreme edge 
-    -->
+  <title>Edge Charsing - 边追赶算法</title>
     
   <style>
     html, body { height: 100%; }
@@ -39,6 +36,8 @@
     let points = []
 
     const polygons = []
+
+    let intersections = []
 
     canvas.onmousedown = function(ev) {
       var x = ev.clientX,
@@ -103,6 +102,15 @@
           index++
         } while(temp !== polygon)
       }
+
+      for (let intersection of intersections) {
+        console.log(intersection)
+        context.beginPath()
+        context.fillStyle = "red"
+        context.arc(intersection.x, height - intersection.y, 5, 0, Math.PI * 2, true)
+        context.closePath()
+        context.fill()
+      }
     
     }
 
@@ -136,9 +144,11 @@
     }
 
     function compute() {
-      // Let E/F be the destination endpoint of e / f. Then
+      // Let E / F be the destination endpoint of e / f. Then
       // 1) if F ∉ L(e) and e x f > 0, or F ∈ L(e) and e x f < 0, advance f
-      // 2) if E ∈ L(f) and f x e > 0, or E ∈ L(f) and f x e < 0, advance e
+      // 2) if E ∉ L(f) and f x e > 0, or E ∈ L(f) and f x e < 0, advance e
+
+      intersections = []
 
       let startE = polygons[0]
       let startF = polygons[1]
@@ -148,7 +158,7 @@
 
       let lengthE = 0
       let lengthF = 0
-
+      let i = 0
       do {
 
         let E = tempE.succ
@@ -162,23 +172,27 @@
         let LE = ToLeft(tempF, F, E) // E ∈ L(f)
 
         if (ToLeft(tempE, E, F) !== ToLeft(tempE, E, tempF) && ToLeft(tempF, F, E) !== ToLeft(tempF, F, tempE)) {
+          intersections.push(segmentsIntr(tempE, E, tempF, F))
           console.log('交点')
         }
 
-        console.log(LF, LE, cross(e, f), cross(f, e), (!LF && cross(e, f) > 0) || (LF && cross(e, f) < 0), (!LE && cross(f, e) > 0) || (LE && cross(f, e) < 0))
-
-        if ((!LF && cross(e, f) < 0) || (LF && cross(e, f) > 0)) {
-          tempF = tempF.succ
+        console.log((!LF && cross(e, f) < 0) || (LF && cross(e, f) < 0))
+        console.log((!LE && cross(f, e) < 0) || (LE && cross(f, e) < 0))
+        if ((!LF && cross(e, f) < 0) || (LF && cross(e, f) < 0)) {
           lengthF ++
-        } 
-        
-        else if ((!LE && cross(f, e) < 0) || (LE && cross(f, e) > 0)) {
+          console.log('移动F')
+          tempF = tempF.succ
+        } else if ((!LE && cross(f, e) < 0) || (LE && cross(f, e) < 0)) {
+          console.log('移动E')
           tempE = tempE.succ
           lengthE ++
         } 
 
+        i ++
+      } while ((lengthE < 2 || startE.succ !== tempE) && (lengthF < 2 || startF.succ !== tempF))
+      // (!lengthE || startE !== tempE) && (!lengthF || startF !== tempF)
 
-      } while ((!lengthE || startE !== tempE) && (!lengthF || startF !== tempF))
+      draw()
     }
 
     function LTL(points) {
@@ -199,6 +213,40 @@
 
     function ToLeft(p, q, s) {
       return area(p, q, s) > 0
+    }
+
+    function segmentsIntr(a, b, c, d){  
+      /** 1 解线性方程组, 求线段交点. **/  
+      // 如果分母为0 则平行或共线, 不相交  
+      var denominator = (b.y - a.y)*(d.x - c.x) - (a.x - b.x)*(c.y - d.y);  
+      if (denominator==0) {  
+          return false;  
+      }  
+     
+      // 线段所在直线的交点坐标 (x , y)      
+      var x = ( (b.x - a.x) * (d.x - c.x) * (c.y - a.y)   
+                  + (b.y - a.y) * (d.x - c.x) * a.x   
+                  - (d.y - c.y) * (b.x - a.x) * c.x ) / denominator ;  
+      var y = -( (b.y - a.y) * (d.y - c.y) * (c.x - a.x)   
+                  + (b.x - a.x) * (d.y - c.y) * a.y   
+                  - (d.x - c.x) * (b.y - a.y) * c.y ) / denominator;  
+    
+      /** 2 判断交点是否在两条线段上 **/  
+      if (  
+          // 交点在线段1上  
+          (x - a.x) * (x - b.x) <= 0 && (y - a.y) * (y - b.y) <= 0  
+          // 且交点也在线段2上  
+           && (x - c.x) * (x - d.x) <= 0 && (y - c.y) * (y - d.y) <= 0  
+          ){  
+    
+          // 返回交点p  
+          return {  
+            x: x,  
+            y: y  
+          }  
+      }  
+      //否则不相交  
+      return false 
     }
 
     /**
