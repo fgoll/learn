@@ -24,6 +24,9 @@
 </head>
 <body>
   <canvas id='canvas' width="500" height="500"></canvas>
+  <button id='button3'>清空</button>
+  <button id='button2'>示例1</button>
+  <button id='button4'>示例2</button>
   <button id='button'>开始</button>
 
   <script>
@@ -56,7 +59,34 @@
         draw()
     }
 
-    button.onclick = compute
+    document.getElementById('button').onclick = compute
+
+    document.getElementById('button2').onclick = () => {
+      targets = []
+      splits = []
+      points = [{"x":235,"y":73},{"x":206,"y":108},{"x":165,"y":118},{"x":87,"y":128},{"x":151,"y":163},{"x":201,"y":203},{"x":201,"y":257},{"x":157,"y":273},{"x":100,"y":290},{"x":178,"y":322},{"x":177,"y":361},{"x":144,"y":376},{"x":249,"y":412},{"x":341,"y":333},{"x":333,"y":260},{"x":283,"y":238},{"x":354,"y":182}]
+      draw()
+      setTimeout(() => {
+        compute()
+      }, 500);
+    }
+
+    document.getElementById('button4').onclick = () => {
+      targets = []
+      splits = []
+      points = [{"x":225,"y":99},{"x":197,"y":155},{"x":120,"y":173},{"x":189,"y":235},{"x":205,"y":336},{"x":316,"y":245},{"x":258,"y":188},{"x":333,"y":139}]
+      draw()
+      setTimeout(() => {
+        compute()
+      }, 500);
+    }
+
+    document.getElementById('button3').onclick = () => {
+      points = []
+      targets = []
+      splits = []
+      draw()
+    }
 
     function draw() {
       context.clearRect(0, 0, canvas.width, canvas.height);
