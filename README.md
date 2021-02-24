@@ -1,6 +1,8 @@
 # 2019.03.22 开始记录自己简单的学习
 - /computational-geometry 计算几何的学习
   - /convex-hull 凸包 
+  - /geometric-intersection 几何相交
+  - /triangulation 三角刨分
   
 - /compilers 编译原理的学习
   - [计算的本质：深入剖析程序和计算机](https://book.douban.com/subject/26148763/)
