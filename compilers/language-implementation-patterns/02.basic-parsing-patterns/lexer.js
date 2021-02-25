@@ -6,7 +6,8 @@ const NAME = 2;
 const COMMA = 3;
 const LBRACK = 4;
 const RBRACK = 5;
-const tokenNames = ["n/a", "<EOF>", "NAME", "COMMA", "LBRACK", "RBRACK"]
+const EQUALS = 6;
+const tokenNames = ["n/a", "<EOF>", "NAME", "COMMA", "LBRACK", "RBRACK", "EQUALS"]
 
 class Token {
 
@@ -71,6 +72,10 @@ class ListLexer extends Lexer {
         case ']':
           this.consume();
           return new Token(RBRACK, ']')
+
+        case '=':
+          this.consume();
+          return new Token(EQUALS, '=')
         
         default: 
           if (this.isLetter()) return this.name()
@@ -106,12 +111,13 @@ class ListLexer extends Lexer {
 // console.log(t.toString())
 
 module.exports = {
-  EOF: '-1',
-  EOF_TYPE: 1,
-  NAME: 2,
-  COMMA: 3,
-  LBRACK: 4,
-  RBRACK: 5,
+  EOF,
+  EOF_TYPE,
+  NAME,
+  COMMA,
+  LBRACK,
+  RBRACK,
+  EQUALS,
   tokenNames: ["n/a", "<EOF>", "NAME", "COMMA", "LBRACK", "RBRACK"],
   Lexer, 
   ListLexer,
