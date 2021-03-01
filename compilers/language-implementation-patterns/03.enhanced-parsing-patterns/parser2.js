@@ -1,6 +1,9 @@
-// 回溯解析器
+// 记忆解析器
+
 
 const lexerM = require('../02.basic-parsing-patterns/lexer')
+
+let FAILED = -1 // 表示上一次解析失败
 
 
 class Parser {
@@ -10,6 +13,7 @@ class Parser {
     this.k = k
     this.lookahead = []
     this.markers = []
+    this.listMemo = {}
     this.p = 0
   }
 
@@ -24,6 +28,7 @@ class Parser {
     if (this.p === this.lookahead.length && !this.isSpeculating()) {
       this.p = 0;
       this.lookahead = []
+      this.listMemo = {}
     }
     this.sync(1)
   }
@@ -65,6 +70,35 @@ class Parser {
   seek(index) { this.p = index }
 
   isSpeculating() { return this.markers.length > 0 }
+
+  /**
+    在当前输入位置上解析过这个规则吗
+    如果查不到相关的记录, 那么没解析过
+    返回值failed 那么上次解析失败
+    返回值大于等于0, 这是词法单元缓冲区的下标, 表示上次解析成功
+    副作用:
+    如果不用重新解析, 则它会自动将缓冲区的下标向前移, 避免重新解析
+   */
+  alreadyParsedRule(memoization) {
+    let memoI = memoization[this.index()]
+    if (memoI === undefined) return false
+
+    console.log("parsed list before at index " + this.index() + "; skip ahead to token index " + memoI + ": " + this.lookahead[+memoI].text)
+
+    this.seek(+memoI)
+
+    return true
+  }
+
+  memoize(memoization, startTokenIndex, failed) {
+    let stopTokenIndex = failed ? FAILED : this.index() 
+    memoization[startTokenIndex] = stopTokenIndex
+  }
+
+
+  index() {
+    return this.p
+  }
 }
 
 class ListParser extends Parser {
@@ -77,15 +111,36 @@ class ListParser extends Parser {
       this.list()
       this.match(lexerM.EOF_TYPE)
     } else if (this.speculateStatAlt2()) {
+      console.log('attempt alertnative 2')
       this.assign()
       this.match(lexerM.EOF_TYPE)
     } else throw new Error("expecting stat found " + this.lt(1).toString())
   }
 
-  list() {
+  _list() {
+    console.log('parse list rule at token index: ' + this.index(), this.lt(1).toString())
     this.match(lexerM.LBRACK);
     this.elements()
     this.match(lexerM.RBRACK)
+  }
+
+  list() {
+    let failed = false
+
+    let startTokenIndex = this.index()
+
+    if (this.isSpeculating() && this.alreadyParsedRule(this.listMemo)) return
+
+    try {
+      this._list()
+    } catch(e) {
+      failed = true
+      throw e
+    } finally {
+      if (this.isSpeculating()) {
+        this.memoize(this.listMemo, startTokenIndex, failed)
+      }
+    }
   }
 
   assign() {
@@ -114,6 +169,8 @@ class ListParser extends Parser {
   }
 
   speculateStatAlt1() {
+    console.log('attempt alertnative 1')
+
     let success = true
     this.mark()
     try {
@@ -129,6 +186,8 @@ class ListParser extends Parser {
   }
 
   speculateStatAlt2() {
+    console.log('attempt alertnative 2')
+
     let success = true
     this.mark()
     try {
@@ -141,7 +200,7 @@ class ListParser extends Parser {
   }
 }
 
-let lexer = new lexerM.ListLexer('[d, e] = [a, c],')
+let lexer = new lexerM.ListLexer('[d,e]=[a,c]')
 
-let parser = new ListParser(lexer, 2)
+let parser = new ListParser(lexer)
 parser.stat()
