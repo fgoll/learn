@@ -1,0 +1,19 @@
+{
+  "name": "rollup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node demo/rollup.js",
+    "build": "gobble build -f dist"
+  },
+  "author": "",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "acorn": "^1.1.0",
+    "magic-string": "^0.5.1",
+    "sander": "^0.3.3"
+  },
+  "license": "ISC"
+}
