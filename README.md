@@ -18,6 +18,7 @@
 - /front-end 前端
   - practice 杂七杂八的练习
   - performance-optimization 性能优化
+    - [性能优化之 DNS Prefetch](https://github.com/barretlee/performance-column/issues/3)   
 
 - /[rust](https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html) 
   
