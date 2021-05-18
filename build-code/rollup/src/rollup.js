@@ -1,6 +1,7 @@
 import { writeFile } from 'sander'
+import Bundle from './Bundle'
 
-export function rollup(entry, options = {}) {
+function rollup(entry, options = {}) {
   const bundle = new Bundle({
     entry,
     resolvePath: options.resolvePath
@@ -24,3 +25,5 @@ export function rollup(entry, options = {}) {
     }
   })
 }
+
+module.exports = rollup

@@ -2,6 +2,8 @@ import path from 'path'
 import { has } from './utils/object'
 import { defaultResolver } from './utils/resolvePath'
 import { readFile, Promise } from 'sander'
+import Module from './Module'
+import ExternalModule from './ExternalModule'
 
 export default class Bundle {
   constructor( options ) {
@@ -20,8 +22,10 @@ export default class Bundle {
   } 
 
   fetchModule( importee, importer ) {
+    // console.log(importee, importer)
     return Promise.resolve( importer === null ? importee : this.resolvePath(importee, importer))
       .then(path => {
+        console.log(path)
         if (!path) {
           // external module
           if (!has(this.modulePromises, importee)) {
@@ -33,11 +37,13 @@ export default class Bundle {
         }
         if (!has(this.modulePromises, path)) {
           this.modulePromises[ path ] = readFile(path, { encoding: "utf-8" }).then( code => {
+            console.log('code', code)
             const module = new Module({
               path,
               code,
               bundle: this
             })
+            // console.log(module)
 
             return module
           })
@@ -49,8 +55,8 @@ export default class Bundle {
   build() {
     return this.fetchModule( this.entryPath, null )
       .then( entryModule => {
+        // console.log(entryModule)
         this.entryModule = entryModule
-        console.log(entryModule)
       })
   }
 }

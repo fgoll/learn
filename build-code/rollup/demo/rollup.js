@@ -1,3 +1,3 @@
-const rollup = require('../src/rollup')
+const rollup = require('../dist/rollup')
 
-rollup('main.js')
+rollup(__dirname + '/main.js')
