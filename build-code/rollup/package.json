@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "babel src -d dist && node demo/rollup.js"
+    "build": "babel src -d dist",
+    "test": "node demo/rollup.js"
   },
   "author": "",
   "devDependencies": {
-    "babel-preset-es2015": "^6.24.1"
+    "babel-preset-es2015": "^6.24.1",
+    "babel-cli": "^6.14.0"
   },
   "dependencies": {
     "acorn": "^1.1.0",

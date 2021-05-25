@@ -2,6 +2,7 @@ import { relative } from 'path'
 import { parse } from 'acorn'
 import MagicString from 'magic-string'
 import getLocation from './utils/getLocation'
+import analyse from './ast/analyse'
 export default class Module {
   constructor({ path, code, bundle }) {
     this.bundle = bundle
@@ -27,14 +28,13 @@ export default class Module {
       e.file = path
       throw e
     }
-
+    
     this.analyse()
   }
 
   analyse() {
     this.imports = {}
     this.exports = {}
-
     this.ast.body.forEach( node => {
       let source
       if (node.type === 'ImportDeclaration') {
@@ -47,14 +47,14 @@ export default class Module {
           const localName  = specifiers.local.name
 
           const name = isDefault
-                         ? 'default' : 
-                           isNamespace 
-                           ? '*' :
-                             specifiers.imported.name
+                          ? 'default' : 
+                            isNamespace 
+                            ? '*' :
+                              specifiers.imported.name
                             //  console.log(this.imports)
           if (this.imports[localName]) {
             const err = new Error(`Duplicated import '${localName}'`)
-     
+      
             err.file = this.path
             err.loc = getLocation( this.code.original, specifiers.start )
             throw err
@@ -115,8 +115,20 @@ export default class Module {
           }
         }
       }
-    })
 
     
+    })
+
+    analyse(this.ast, this.code, this);
+    
+    this.definedNames = this.ast._scope.names.slice();
+
+    this.canonicalNames = {}
+
+    this.definitions = {}
+    this.definitionPromises = {}
+    this.modifications = {}
+
+    console.log('this.ast._scope.names', this.ast._scope.names)
   }
 }

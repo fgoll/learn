@@ -57,6 +57,10 @@ export default class Bundle {
       .then( entryModule => {
         // console.log(entryModule)
         this.entryModule = entryModule
+
+        if ( entryModule.exports.default ) {
+          
+        }
       })
   }
 }

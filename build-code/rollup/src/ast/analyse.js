@@ -53,12 +53,12 @@ export default function analyse ( ast, magicString, module ) {
 
 			if ( !comment || ( comment.end > statement.start ) ) break;
 
-			// attach any trailing comment to the previous statement
+			// 关联尾部注解
 			if ( trailing && !/\n/.test( magicString.slice( previousStatement.end, comment.start ) ) ) {
 				previousStatement._trailingComment = comment;
 			}
 
-			// then attach leading comments to this statement
+			// 关联头部注解
 			else {
 				statement._leadingComments.push( comment );
 			}
@@ -67,7 +67,7 @@ export default function analyse ( ast, magicString, module ) {
 			trailing = false;
 		} while ( module.comments[ commentIndex ] );
 
-		// determine margin
+		// 计算距离
 		const previousEnd = previousStatement ? ( previousStatement._trailingComment || previousStatement ).end : 0;
 		const start = ( statement._leadingComments[0] || statement ).start;
 
@@ -80,6 +80,11 @@ export default function analyse ( ast, magicString, module ) {
 		walk( statement, {
 			enter ( node ) {
 				let newScope;
+
+				console.log(statement)
+				console.log('-----------------')
+				console.log(node)
+				console.log('=================')
 
 				magicString.addSourcemapLocation( node.start );
 
