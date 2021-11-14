@@ -6,5 +6,6 @@ images/
 .vscode
 xcuserdata
 myignore
+CMakeFiles
 
 rust/*/target
